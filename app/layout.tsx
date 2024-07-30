@@ -1,6 +1,8 @@
 // app/layout.tsx
 import { inter } from "@/app/ui/font";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 import type { Metadata } from "next";
 import "@/app/globals.css";
 
@@ -21,6 +23,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
