@@ -46,47 +46,47 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipes }) => {
   }>({});
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  // Generate email body
   const generateEmailBody = () => {
     return `
-      <p>Hola ${formData.username},</p>
-      <p>Aquí están las recetas creadas con inteligencia artificial:</p>
-      ${recipes
-        .map(
-          (recipe) => `
-          <div style="margin-bottom: 20px;">
-            <h3>${recipe.title}</h3>
-            <p><strong>Duración:</strong> ${recipe.duration}</p>
-            <p><strong>Ingredientes:</strong></p>
-            <ul>
-              ${recipe.ingredients
-                .map(
-                  (ingredient) => `
-                  <li>
-                    ${ingredient.name} - ${ingredient.quantity} 
-                    (${ingredient.calories} calorías)
-                  </li>`
-                )
-                .join("")}
-            </ul>
-            <p><strong>Pasos:</strong></p>
-            <ol>
-              ${recipe.steps.map((step) => `<li>${step}</li>`).join("")}
-            </ol>
-          </div>`
-        )
-        .join("")}
-      <p>¡Disfruta tus recetas!</p>
-      <p style="color:gray">
-      <strong>Aviso Legal:</strong>
-      Las recetas proporcionadas en esta plataforma son generadas por inteligencia artificial (IA). 
-      Aunque buscamos la precisión, podrían contener errores. Revise siempre los ingredientes y pasos. 
-      Verifique las recetas en caso de alergias o intolerancias alimentarias.
-      Consulte a un profesional de la salud para dietas específicas. 
-      Los resultados pueden variar según los ingredientes y métodos de cocción utilizados. 
-      No nos hacemos responsables de daños o inconvenientes derivados del uso de estas recetas. 
-      Cocine con precaución y disfrute.
-      </p>
+      <div>
+        <p>Hola ${formData.username},</p>
+        <p>Aquí están las recetas creadas con inteligencia artificial:</p>
+        ${recipes
+          .map(
+            (recipe) => `
+            <div style="margin-bottom: 20px;">
+              <h3>${recipe.title}</h3>
+              <p><strong>Duración:</strong> ${recipe.duration}</p>
+              <p><strong>Ingredientes:</strong></p>
+              <ul>
+                ${recipe.ingredients
+                  .map(
+                    (ingredient) => `
+                    <li>${ingredient.name} - ${ingredient.quantity} (${ingredient.calories} calorías)</li>
+                  `
+                  )
+                  .join("")}
+              </ul>
+              <p><strong>Pasos:</strong></p>
+              <ol>
+                ${recipe.steps.map((step) => `<li>${step}</li>`).join("")}
+              </ol>
+            </div>
+          `
+          )
+          .join("")}
+        <p>¡Disfruta tus recetas!</p>
+        <p style="color:gray">
+          <strong>Aviso Legal:</strong>
+          Las recetas proporcionadas en esta plataforma son generadas por inteligencia artificial (IA).
+          Aunque buscamos la precisión, podrían contener errores. Revise siempre los ingredientes y pasos.
+          Verifique las recetas en caso de alergias o intolerancias alimentarias.
+          Consulte a un profesional de la salud para dietas específicas.
+          Los resultados pueden variar según los ingredientes y métodos de cocción utilizados.
+          No nos hacemos responsables de daños o inconvenientes derivados del uso de estas recetas.
+          Cocine con precaución y disfrute.
+        </p>
+      </div>
     `;
   };
 
@@ -102,28 +102,29 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipes }) => {
 
     try {
       formSchema.parse(formData);
-      const form = e.currentTarget;
-      const formDataObj = new FormData(form);
-      formDataObj.append("username", formData.username);
-      formDataObj.append("email", formData.email);
-      formDataObj.append("message", generateEmailBody());
+      const emailBody = generateEmailBody();
 
       const response = await fetch(
         "https://formsubmit.co/nico.rc8@hotmail.com",
         {
           method: "POST",
-          body: formDataObj,
+          headers: {
+            "Content-Type": "text/html",
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            email: formData.email,
+            message: emailBody,
+          }),
         }
       );
 
-      // Check if the response is not JSON
       const contentType = response.headers.get("Content-Type");
       if (contentType && contentType.includes("application/json")) {
         const result = await response.json();
         setSuccessMessage("Recetas enviadas exitosamente!");
         setFormData({ username: "", email: "" });
       } else {
-        // Handle non-JSON response
         const text = await response.text();
         console.error("Unexpected response format:", text);
         setSuccessMessage("Error al enviar las recetas.");
