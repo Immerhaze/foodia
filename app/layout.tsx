@@ -1,3 +1,4 @@
+// app/layout.tsx
 import { inter } from "@/app/ui/font";
 import type { Metadata } from "next";
 import "@/app/globals.css";
