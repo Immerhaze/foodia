@@ -330,9 +330,9 @@ export function InputSection({ arr }: InputSectionProps) {
             onValueChange={handleSliderChange}
           />
         </div>
-        <div className="w-full flex flex-row justify-between items-center gap-2">
-          <p className="text-base font-semibold">Min: {minValue}</p>
-          <p className="text-base font-semibold">Max: {maxValue}</p>
+        <div className="w-full flex flex-row justify-center items-center">
+          <p className="text-base font-semibold">Min: {minValue} - </p>
+          <p className="text-base font-semibold ml-1">Max: {maxValue}</p>
         </div>
       </div>
     </>

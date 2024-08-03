@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "custom-background": "url('/backgroundlanding.jpg')",
+      },
       colors: {
         // Dark theme colors
         dashboard_dark: "#191D24",

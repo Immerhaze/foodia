@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { sumKca } from "@/lib/utils";
 
 interface Ingredient {
   name: string;
@@ -42,13 +43,6 @@ export function RecipesCards({ recipes }: RecipesProps) {
       console.log(emblaApi.slideNodes()); // Access API
     }
   }, [emblaApi, recipes]);
-
-  const sumKca = (ingredients: Ingredient[]): number => {
-    return ingredients.reduce(
-      (total, ingredient) => total + ingredient.calories,
-      0
-    );
-  };
 
   return (
     <div

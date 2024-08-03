@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import React, { useState } from "react";
 import { InputSection } from "@/app/ui/components/input-buttons";
 import useStore from "@/app/store";
@@ -230,7 +229,6 @@ export default function SideNav({ onRecipesGenerated }: SideNavProps) {
   ];
 
   const store = useStore();
-  const [Recipes, setRecipes] = useState();
   const [error, setError] = useState<string | null>(null);
 
   async function checkStore() {
@@ -260,21 +258,21 @@ export default function SideNav({ onRecipesGenerated }: SideNavProps) {
       return;
     }
     try {
-      // const recipes = await generateRecipes({
-      //   body: body,
-      //   objective: objective,
-      //   diet: diet,
-      //   allergies: allergies,
-      //   intolerance: intolerance,
-      //   conditions: condition,
-      //   budget: budget,
-      //   country: "Chile",
-      //   kca: diario,
-      // });
+      const recipes = await generateRecipes({
+        body: body,
+        objective: objective,
+        diet: diet,
+        allergies: allergies,
+        intolerance: intolerance,
+        conditions: condition,
+        budget: budget,
+        country: "Chile",
+        kca: diario,
+      });
       console.log(store);
       store.setapiRunning(false);
       store.setMobileConsult(true);
-      // onRecipesGenerated(recipes); // Pass the recipes to the parent
+      onRecipesGenerated(recipes); // Pass the recipes to the parent
     } catch (e) {
       store.setapiRunning(false);
       setError("Failed to generate recipes.");
@@ -283,15 +281,15 @@ export default function SideNav({ onRecipesGenerated }: SideNavProps) {
 
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2 bg-widget_light rounded-2xl shadow-xl">
-      <Link
-        className="border-b-[1px]  border-primary_text_light/30 shadow-md shadow-semantic_green_light/30 mb-2 flex h-20 justify-center items-center rounded-md p-4 "
-        href="/"
-      >
-        <div className="w-full text-secondary text-center text-primary_text_light font-normal text-5xl ">
-          FOOD
-          <span className="text-semantic_green_light font-extrabold">IA</span>
+      <span className="border-b-[1px]  border-primary_text_light/30 shadow-md shadow-semantic_green_light/30 mb-2 flex h-20 justify-center items-center rounded-md p-4 ">
+        <div className="w-full text-secondary text-center text-primary_text_light font-normal text-4xl ">
+          <h1>
+            MEALT
+            <span className="text-semantic_green_light font-extrabold">AI</span>
+            M
+          </h1>
         </div>
-      </Link>
+      </span>
 
       <div className=" overflow-y-scroll overflow-x-hidden input-scrollbar flex grow flex-col py-2 justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <InputSection arr={sections} />

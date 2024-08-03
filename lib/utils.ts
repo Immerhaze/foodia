@@ -43,3 +43,71 @@ export function GetDiario(
     return "Invalid gender";
   }
 }
+
+// types.ts
+export interface Ingredient {
+  name: string;
+  quantity: string;
+  calories: number;
+}
+
+export const sumKca = (ingredients: Ingredient[]): number => {
+  return ingredients.reduce(
+    (total, ingredient) => total + ingredient.calories,
+    0
+  );
+};
+
+type Recipe = {
+  title: string;
+  ingredients: Ingredient[];
+  steps: string[];
+  duration: string;
+};
+
+interface emailprops {
+  recipes: Recipe[];
+}
+
+export const ingredientList = ({ recipes }: emailprops) => {
+  let allIngredients: string[] = [];
+  let uniqueIngredients: string[] = [];
+  let processed: Set<string> = new Set();
+
+  // Function to normalize ingredient names
+  const normalizeName = (name: string) => {
+    return name.toLowerCase().trim();
+  };
+
+  // Function to find partial matches
+  const findMatch = (name: string, list: string[]) => {
+    for (const item of list) {
+      if (item.includes(name) || name.includes(item)) {
+        return item;
+      }
+    }
+    return null;
+  };
+
+  recipes.forEach((recipe) => {
+    recipe.ingredients.forEach((ingredient) => {
+      const normalizedName = normalizeName(ingredient.name);
+
+      if (!processed.has(normalizedName)) {
+        // Find if there's a similar ingredient already in the list
+        const match = findMatch(normalizedName, uniqueIngredients);
+        if (match) {
+          // If match is found, use the existing ingredient's name
+          processed.add(normalizedName);
+        } else {
+          // No match found, add as new unique ingredient
+          uniqueIngredients.push(normalizedName);
+          processed.add(normalizedName);
+        }
+      }
+    });
+  });
+
+  // Optionally, return or log uniqueIngredients
+  return uniqueIngredients;
+};
