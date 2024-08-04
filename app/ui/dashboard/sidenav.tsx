@@ -2,14 +2,19 @@
 import React, { useState } from "react";
 import { InputSection } from "@/app/ui/components/input-buttons";
 import useStore from "@/app/store";
-import { generateRecipes } from "@/app/api/generateRecipes";
+import { generateRecipes } from "@/lib/generateRecipes";
 import { GetDiario } from "@/lib/utils";
+import { Button } from "../button";
 
 interface SideNavProps {
   onRecipesGenerated: (recipes: any[]) => void;
+  showform: (state: boolean) => void;
 }
 
-export default function SideNav({ onRecipesGenerated }: SideNavProps) {
+export default function SideNav({
+  onRecipesGenerated,
+  showform,
+}: SideNavProps) {
   const sections = [
     {
       title: "genre",
@@ -266,12 +271,11 @@ export default function SideNav({ onRecipesGenerated }: SideNavProps) {
         intolerance: intolerance,
         conditions: condition,
         budget: budget,
-        country: "Chile",
         kca: diario,
       });
-      console.log(store);
       store.setapiRunning(false);
       store.setMobileConsult(true);
+      console.log(recipes);
       onRecipesGenerated(recipes); // Pass the recipes to the parent
     } catch (e) {
       store.setapiRunning(false);
@@ -281,7 +285,7 @@ export default function SideNav({ onRecipesGenerated }: SideNavProps) {
 
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2 bg-widget_light rounded-2xl shadow-xl">
-      <span className="border-b-[1px]  border-primary_text_light/30 shadow-md shadow-semantic_green_light/30 mb-2 flex h-20 justify-center items-center rounded-md p-4 ">
+      <span className="hidden border-b-[1px] border-primary_text_light/30 shadow-md shadow-semantic_green_light/30 mb-2 md:flex h-20 justify-center items-center rounded-md p-4 ">
         <div className="w-full text-secondary text-center text-primary_text_light font-normal text-4xl ">
           <h1>
             MEALT
@@ -290,33 +294,45 @@ export default function SideNav({ onRecipesGenerated }: SideNavProps) {
           </h1>
         </div>
       </span>
+      <Button className="h-20 md:hidden" onClick={() => showform(false)}>
+        <span className="icon-[icon-park-twotone--back] text-semantic_green_light text-xl mr-2"></span>
+        <h1 className="text-2xl">Pagina de inicio</h1>
+      </Button>
 
       <div className=" overflow-y-scroll overflow-x-hidden input-scrollbar flex grow flex-col py-2 justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <InputSection arr={sections} />
         <form
           onSubmit={(e) => {
             e.preventDefault(); // Prevent default form submission behavior
+            if (window.innerWidth <= 768) {
+              // Check if the device is mobile
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              });
+            }
+            showform(false);
             checkStore();
           }}
           className="w-full flex flex-col justify-center items-center"
         >
-          <button
+          <Button
             type="submit" // Change type to submit
             disabled={store.apiRunning}
-            className="bg-widget_light lg:hover:bg-accent_color_light text-primary_text_light lg:hover:text-white border-4 hover:border-2 border-primary_text_light rounded-xl flex flex-row items-center justify-between h-[48px] w-10/12 "
+            className="h-[48px] "
           >
             {store.apiRunning ? (
               //
               <span>CARGANDO</span>
             ) : (
               <>
-                <span className="font-bold tracking-wide flex flex-row justify-center items-center w-full text-xl gap-2 ">
+                <span className="flex flex-row justify-center items-center text-xl gap-4">
                   CONSULTAR
                   <span className="icon-[material-symbols--send] "></span>
                 </span>
               </>
             )}
-          </button>
+          </Button>
           {error && (
             <p className="text-red-600 text-xs font-semibold px-2  py-2 text-center">
               {error}

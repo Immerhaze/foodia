@@ -8,10 +8,12 @@ import EmailForm from "@/app/ui/components/emailForm";
 import PdfForm from "./ui/components/pdfForm";
 import Image from "next/image";
 import { ingredientList } from "@/lib/utils";
+import { PageSkeleton } from "./ui/components/pagesSkeleton";
 
 export default function Page() {
   const [recipes, setRecipes] = useState<any[]>([]);
   const [showRecipes, setShowRecipes] = useState(false);
+  const [ShowForm, setShowForm] = useState(false);
   const store = useStore();
 
   // Dummy data for recipes
@@ -409,54 +411,67 @@ export default function Page() {
     setShowRecipes(true); // Show recipes when they are generated
   }, []);
 
+  function handleFormMobileToggle(state: boolean) {
+    setShowForm(!state);
+  }
+
   function handleMobileBackToForm() {
     store.setMobileConsult(false);
   }
 
   function handleingredients() {
-    ingredientList({ recipes: recipesarray });
+    ingredientList({ recipes: recipes });
   }
 
   return (
-    <div className="flex flex-col h-screen w-full bg-dashboard_light md:flex-row md:overflow-hidden">
+    <div className="flex flex-col h-screen w-full  md:flex-row md:overflow-hidden">
       <div
         className={`w-full flex-none md:w-1/3 lg:w-96 p-2 ${
-          store.mobileConsult ? "hidden md:block" : "block"
+          ShowForm ? "block" : "hidden md:block"
         }`}
       >
-        <SideNav onRecipesGenerated={handleRecipesGenerated} />
+        <SideNav
+          onRecipesGenerated={handleRecipesGenerated}
+          showform={setShowForm}
+        />
       </div>
       <div
-        className={`h-full md:w-2/3 bg-red-400  py-3 ${
-          store.mobileConsult ? "block" : "hidden md:block"
+        className={`h-full md:w-2/3 p-2 md:flex md:flex-col md:justify-center ${
+          ShowForm ? "hidden md:block" : "block"
         }`}
       >
-        {store.apiRunning ? (
+        {!ShowForm && store.apiRunning ? (
+          <div className="w-full h-full">
+            <PageSkeleton />
+          </div>
+        ) : !ShowForm && !store.apiRunning && recipes.length > 0 ? (
           <>
-            <div className="md:hidden w-full h-20 flex flex-row justify-center items-center  text-center text-primary_text_light font-normal text-5xl ">
-              <h1>FOOD</h1>
-              <span className="text-semantic_green_light font-extrabold">
-                IA
-              </span>
+            <div className="w-full h-20 md:hidden text-secondary text-center flex justify-center items-center text-primary_text_light font-normal text-4xl">
+              <h1>
+                MEALT
+                <span className="text-semantic_green_light font-extrabold">
+                  AI
+                </span>
+                M
+              </h1>
             </div>
-            <div className="flex flex-col items-center justify-evenly px-2 md:h-5/6 ">
-              <div className="h-20 w-full flex  justify-center items-center">
+            <div className="flex flex-col items-center justify-evenly px-2 md:h-5/6">
+              <div className="h-20 w-full flex justify-center items-center">
                 <button
                   onClick={handleingredients}
-                  className="text-2xl  rounded-lg w-2/3 text-white bg-semantic_green_light font font-semibold tracking tracking-wider  flex flex-row justify-center items-center py-2"
+                  className="text-2xl rounded-lg w-2/3 text-white bg-semantic_green_light font font-semibold tracking-wider flex flex-row justify-center items-center py-2"
                 >
-                  <span className="icon-[solar--chef-hat-heart-bold]"></span>
                   <h2>RECETAS</h2>
                 </button>
               </div>
               <RecipesCards recipes={recipes} />
               <div className="h-36 md:hidden w-full flex flex-col justify-center items-center">
-                <EmailForm recipes={recipes} />
+                <EmailForm recipeslist={recipes} />
                 <Button
                   onClick={handleMobileBackToForm}
-                  className="bg-widget_light mt-3  lg:hover:bg-accent_color_light text-primary_text_light lg:hover:text-white border-primary_text_light "
+                  className="bg-widget_light mt-3 lg:hover:bg-accent_color_light text-primary_text_light lg:hover:text-white border-primary_text_light"
                 >
-                  <span className="font-normal tracking-wide  w-full text-xl ">
+                  <span className="font-normal tracking-wide w-full text-xl">
                     <span className="icon-[lets-icons--back] text-xl mr-2"></span>
                     Repetir
                   </span>
@@ -464,77 +479,96 @@ export default function Page() {
               </div>
             </div>
             <div className="hidden md:h-1/6 md:flex justify-center items-center">
-              <EmailForm recipes={recipes} />
+              <EmailForm recipeslist={recipes} />
               <PdfForm recipes={recipes} />
             </div>
           </>
         ) : (
-          <div className="w-full h-full flex flex-col  justify-center">
-            <div className="relative w-full h-1/3 bg-custom-background bg-center bg-cover overflow-hidden rounded-xl mb-2">
-              <span className=" absolute left-0 top-0 w-full h-full bg-accent_color_light/90" />
-              <div className="absolute w-full h-full  flex flex-col gap-3 justify-center px-5">
-                <h1 className="font-semibold text-6xl text-white">
+          <>
+            <div className="w-full h-20 md:hidden text-secondary text-center flex justify-center items-center text-primary_text_light font-normal text-4xl">
+              <h1>
+                MEALT
+                <span className="text-semantic_green_light font-extrabold">
+                  AI
+                </span>
+                M
+              </h1>
+            </div>
+            <div className="relative w-full h-2/6 md:h-1/6 lg:h-2/6 bg-custom-background bg-center bg-cover overflow-hidden rounded-xl mb-2">
+              <span className="absolute left-0 top-0 w-full h-full bg-accent_color_light/90" />
+              <div className="absolute w-full h-full flex flex-col gap-3 justify-evenly md:justify-center px-5">
+                <h1 className="font-semibold text-3xl md:text-4xl lg:text-5xl text-white">
                   Deja atrás el aburrimiento culinario.
                 </h1>
-                <h3 className=" font-normal text-2xl text-white">
+                <h3 className="font-normal text-xl md:text-2xl lg:text-3xl text-white">
                   Descubre recetas hechas para ti.
                 </h3>
+                <Button
+                  className="md:hidden"
+                  onClick={() => handleFormMobileToggle(ShowForm)}
+                >
+                  <span className="icon-[fluent--form-new-20-filled]"></span>
+                  Ir a formulario
+                </Button>
               </div>
             </div>
-            <div className="bg-white rounded-xl h-1/3 p-4 flex flex-col gap-2 mb-2">
-              <h2 className="text-3xl text-accent_color_light font-semibold tracking-wide">
-                Modo de uso:
+            <div className="rounded-xl p-3 flex flex-col gap-2 bg-white shadow-sm">
+              <h2 className="text-xl md:text-2xl text-accent_color_light font-semibold tracking-wide">
+                MODO DE USO
               </h2>
-              <p className=" text-left text-xl tracking-wide">
-                {" "}
-                A tu izquierda encontraras el formulario de consulta. los únicos
-                campos obligatorios solos uqe tienen un asterisco en el titulo
-                (objetivo, tipo de cuerpo, dieta).
-              </p>
-              <p className="text-left text-xl tracking-wide">
-                todos los otros campos adicionales ayudara a crear tu recetario
-                de almuerzos de una manera mas precisa.
-              </p>
-              <p className="text-left text-xl tracking-wide">
-                {" "}
-                Especialmente los primeros 5 campos deberían ser completados en
-                conjunto, para calcular exitosamente un aproximado de tu gasto
-                calórico diario
-              </p>
-            </div>
-            <div className="bg-white rounded-xl h-auto p-4 flex flex-col gap-2">
-              <h2 className="text-3xl text-accent_color_light font-semibold tracking-wide">
-                Pasos:
+              <div className="text-left text-base md:text-lg tracking-wide flex flex-col gap-2">
+                <p>
+                  <span className="hidden md:block">
+                    A tu izquierda encontraras el formulario de consulta.
+                  </span>{" "}
+                  Los únicos campos obligatorios son los que tienen un asterisco
+                  en el título{" "}
+                  <strong>(objetivo, tipo de cuerpo, dieta)</strong>.
+                </p>
+                <p>
+                  Todos los otros campos adicionales ayudaran a crear tu
+                  recetario de almuerzos de una manera más precisa.
+                </p>
+                <p>
+                  Especialmente los primeros 5 campos deberían ser completados
+                  en conjunto, para calcular exitosamente un aproximado de tu
+                  gasto calórico diario.
+                </p>
+              </div>
+              <h2 className="text-xl md:text-2xl text-accent_color_light font-semibold tracking-wide">
+                PASOS
               </h2>
-              <ul className="text-2xl flex flex-col gap-2 tracking-wide">
-                <li>
-                  <span className="text-semantic_green_light font-bold text-3xl mr-2">
-                    1.
-                  </span>
-                  Rellena el formulario, completa o parcialmente - según las
-                  instrucciones.
-                </li>
-                <li>
-                  <span className="text-semantic_green_light font-bold text-3xl mr-2">
-                    2.
-                  </span>
-                  Listo, Obtén tus recetas.
-                </li>
-                <li>
-                  <span className="text-semantic_green_light font-bold text-3xl mr-2">
-                    3.
-                  </span>
-                  Descarga un PDF con tu recetario.
-                </li>
-                <li>
-                  <span className="text-semantic_green_light font-bold text-3xl mr-2">
-                    4.
-                  </span>
-                  Envía tu recetario a un E-mail de tu preferencia.
-                </li>
-              </ul>
+              <div className="text-base md:text-lg">
+                <ul className="flex flex-col gap-2">
+                  <li>
+                    <span className="text-semantic_green_light font-bold md:text-xl mr-2">
+                      1.
+                    </span>
+                    Rellena el formulario, completa o parcialmente - según las
+                    instrucciones.
+                  </li>
+                  <li>
+                    <span className="text-semantic_green_light font-bold md:text-xl mr-2">
+                      2.
+                    </span>
+                    Listo, Obtén tus recetas.
+                  </li>
+                  <li>
+                    <span className="text-semantic_green_light font-bold md:text-xl mr-2">
+                      3.
+                    </span>
+                    Descarga un PDF con tu recetario.
+                  </li>
+                  <li>
+                    <span className="text-semantic_green_light font-bold md:text-xl mr-2">
+                      4.
+                    </span>
+                    Envía tu recetario a un E-mail de tu preferencia.
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>

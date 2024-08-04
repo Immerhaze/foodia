@@ -6,7 +6,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Resend } from "resend";
-import { RecipesEmail } from "@/app/emails/email";
 
 type Ingredient = {
   name: string;
@@ -28,7 +27,7 @@ type FormData = {
 };
 
 type EmailFormProps = {
-  recipes: Recipe[];
+  recipeslist: Recipe[];
 };
 
 // Define the Zod schema
@@ -37,7 +36,7 @@ const formSchema = z.object({
   email: z.string().email("Debe ser un correo electrónico válido"),
 });
 
-const EmailForm: React.FC<EmailFormProps> = ({ recipes }) => {
+const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
   const [formData, setFormData] = useState<FormData>({
     username: "",
     email: "",
@@ -47,6 +46,8 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipes }) => {
     email?: string;
   }>({});
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean | null>(null);
+  const [sent, setSent] = useState<boolean | null>(null);
 
   // Handle form changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,22 +58,38 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipes }) => {
   // Validate form data and handle submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    ("use server");
-    const resendApiKey = process.env.NEXT_PUBLIC_RESEND_API_KEY;
-    const resend = new Resend(resendApiKey);
+
     try {
-      const { data } = await resend.emails.send({
-        from: "MEALTAIM <recetas@mealtaim.online>",
-        to: [formData.email],
-        subject: "Recetas creadas para ti!",
-        react: RecipesEmail({
-          username: formData.username,
-          recipes: recipes,
-        }),
+      setLoading(true);
+      const response = await fetch("http://localhost:3001/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ formdata: formData, recipes: recipeslist }),
       });
-      console.log(data);
+
+      if (response.ok) {
+        const data = await response.json();
+        setLoading(false);
+        setFormData({ username: "", email: "" });
+        console.log("Email sent successfully:", data);
+        setSent(true);
+      } else {
+        const error = await response.json();
+        console.error("Error sending email:", error);
+        setLoading(false);
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error:", error);
+      setLoading(false);
+    } finally {
+      setFormData({
+        email: "",
+        username: "",
+      });
+      setLoading(false);
+      setSent(false);
     }
   };
 
@@ -140,7 +157,16 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipes }) => {
               className="bg-accent_color_light hover:bg-semantic_green_light text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              Enviar Recetas
+              {loading ? (
+                "Enviando Email..."
+              ) : sent ? (
+                <span>
+                  <span className="icon-[icon-park-twotone--success] text-semantic_green_light"></span>
+                  Enviado
+                </span>
+              ) : (
+                "Enviar al E-mail"
+              )}
             </button>
           </div>
           {successMessage && (

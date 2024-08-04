@@ -12,7 +12,6 @@ import {
   Preview,
   Section,
   Text,
-  Row,
   Html,
 } from "@react-email/components";
 import * as React from "react";
@@ -32,12 +31,17 @@ type Recipe = {
   duration: string;
 };
 
-interface emailprops {
+type FormData = {
   username: string;
+  email: string;
+};
+
+interface emailprops {
+  formdata: FormData;
   recipes: Recipe[];
 }
 
-export const RecipesEmail = ({ username, recipes }: emailprops) => {
+export const RecipesEmail = ({ formdata, recipes }: emailprops) => {
   const categorizedIngredients = ingredientList({ recipes: recipes });
   return (
     <Html>
@@ -75,7 +79,7 @@ export const RecipesEmail = ({ username, recipes }: emailprops) => {
               style={section}
               className="border-dashed border-t-2 border-[#324947]"
             >
-              <Text style={text}>Hola {username},</Text>
+              <Text style={text}>Hola {formdata.username},</Text>
 
               <Text style={text}>
                 ¡La magia de la cocina ha llegado a tu bandeja de entrada!
@@ -222,8 +226,6 @@ export const RecipesEmail = ({ username, recipes }: emailprops) => {
     </Html>
   );
 };
-
-export default RecipesEmail;
 
 const container = {
   margin: "0 auto",
