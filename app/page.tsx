@@ -473,10 +473,6 @@ export default function Page() {
                 <EmailForm recipeslist={recipes} />
                 <PdfForm recipes={recipes} />
               </div>
-              <div className="hidden w-full h-1/6 md:flex flex-col md:flex-row items-center justify-center gap-2  p-2">
-                <EmailForm recipeslist={recipes} />
-                <PdfForm recipes={recipes} />
-              </div>
             </div>
           </>
         ) : (

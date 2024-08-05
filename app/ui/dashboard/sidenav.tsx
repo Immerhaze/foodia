@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { InputSection } from "@/app/ui/components/input-buttons";
 import useStore from "@/app/store";
-import { generateRecipes } from "@/lib/generateRecipes";
 import { GetDiario } from "@/lib/utils";
 import { FunctionalBtn } from "../components/functionalBtn";
 
@@ -271,6 +270,32 @@ export default function SideNav({
   const store = useStore();
   const [error, setError] = useState<string | null>(null);
 
+  async function generateRecipes(data: {
+    body: string;
+    objective: string;
+    diet: string;
+    allergies?: string[];
+    intolerance?: string[];
+    conditions?: string[];
+    budget: number;
+    kca: number | string;
+  }) {
+    const response = await fetch(`${process.env.API_GENERATE_URL}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const recipes = await response.json();
+    return recipes;
+  }
+
   async function checkStore() {
     store.setapiRunning(true);
     const {
@@ -290,29 +315,71 @@ export default function SideNav({
     // Ensure genre is a valid string, fallback to "unknown" if null or undefined
     const safeGenre: string = genre ?? "unknown";
 
+    // Log the state values for debugging
+    console.log("Current store values:", {
+      genre: safeGenre,
+      weight,
+      height,
+      age,
+      body,
+      diet,
+      objective,
+      allergies,
+      intolerance,
+      condition,
+      budget,
+    });
+
     // Call GetDiario with the correct arguments
-    const diario = await GetDiario(safeGenre, weight, height, age);
+    if (safeGenre == null || weight == null || height == null || age == null) {
+      console.error("Missing required parameters for GetDiario");
+      // Optionally handle this case if needed, e.g., set a default or show a warning
+    }
+
+    const diario = GetDiario(safeGenre, weight, height, age);
+    console.log("Calculated diario value:", diario);
 
     if (!body || !diet || !objective) {
+      console.error("Missing required fields for recipe generation:", {
+        body,
+        diet,
+        objective,
+      });
+      store.setapiRunning(false);
       setError("Please complete all required sections.");
       return;
     }
+
     try {
-      const recipes = await generateRecipes({
-        body: body,
-        objective: objective,
-        diet: diet,
-        allergies: allergies,
-        intolerance: intolerance,
-        conditions: condition,
-        budget: budget,
+      console.log("Calling generateRecipes with parameters:", {
+        body,
+        objective,
+        diet,
+        allergies,
+        intolerance,
+        condition,
+        budget,
         kca: diario,
       });
+
+      const response = await generateRecipes({
+        body,
+        objective,
+        diet,
+        allergies,
+        intolerance,
+        conditions: condition,
+        budget,
+        kca: diario,
+      });
+
+      console.log("Recipe generation response:", response);
+
       store.setapiRunning(false);
       store.setMobileConsult(true);
-      console.log(recipes);
-      onRecipesGenerated(recipes); // Pass the recipes to the parent
-    } catch (e) {
+      onRecipesGenerated(response);
+    } catch (error) {
+      console.error("Error generating recipes:", error);
       store.setapiRunning(false);
       setError("Failed to generate recipes.");
     }
