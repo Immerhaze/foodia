@@ -11,12 +11,14 @@ import { Toaster } from "@/components/ui/toaster";
 
 interface SideNavProps {
   onRecipesGenerated: (recipes: any[]) => void;
-  showform: (state: boolean) => void;
+  showform: () => void;
+  showFormOn: () => void;
 }
 
 export default function SideNav({
   onRecipesGenerated,
   showform,
+  showFormOn,
 }: SideNavProps) {
   const sections = [
     {
@@ -272,7 +274,9 @@ export default function SideNav({
   ];
   const { toast } = useToast();
   const store = useStore();
-  const [error, setError] = useState<string | null>(null);
+  console.log("api running:", store.apiRunning);
+  const [error, setError] = useState<string | null>("");
+  console.log("state error:", error);
 
   async function generateRecipes(data: {
     body: string;
@@ -335,7 +339,8 @@ export default function SideNav({
       condition,
       budget,
     });
-    setError(null);
+    setError("");
+    store.setError("");
 
     // Call GetDiario with the correct arguments
     if (safeGenre == null || weight == null || height == null || age == null) {
@@ -353,14 +358,13 @@ export default function SideNav({
         objective,
       });
       store.setError("Campos requeridos");
-      store.setapiRunning(false);
       setError("Rellena los 3 valores requeridos: objetivo, dieta, cuerpo.");
       return;
     }
 
     try {
       store.setapiRunning(true);
-      showform(false);
+      showform();
       console.log("Calling generateRecipes with parameters:", {
         body,
         objective,
@@ -385,13 +389,15 @@ export default function SideNav({
 
       console.log("Recipe generation response:", response);
 
-      store.setapiRunning(false);
       store.setMobileConsult(true);
       onRecipesGenerated(response);
+      store.setapiRunning(false);
     } catch (error) {
       console.error("Error generating recipes:", error);
       store.setapiRunning(false);
+      showFormOn();
       setError("Hubo un fallo, intenta nuevamente");
+      store.setError("fallo de conexión");
       toast({
         title: "Error",
         variant: "destructive",
@@ -417,7 +423,7 @@ export default function SideNav({
         </div>
       </span>
       <FunctionalBtn
-        fn={() => showform(false)}
+        fn={showform}
         text="Inicio"
         classNameIcon="icon-[icon-park-twotone--back] text-semantic_green_light"
         classNameBtn="w-full text-xl font-semibold px-1  h-20 md:hidden"

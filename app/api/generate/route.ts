@@ -61,18 +61,19 @@ export async function POST(req: NextRequest) {
         : "";
 
     const prompt = `
-      Genera 5 recetas de almuerzos diferentes. Ten en cuenta los siguientes parámetros para estas recetas:
-      ${caloricExpenditureMessage}
-      2. Tipo de cuerpo: ${body}
-      3. Objetivo: ${objective}
-      4. Dieta: ${diet}
-      ${allergiesMessage}
-      ${intoleranceMessage}
-      ${conditionsMessage}
-      8. Presupuesto total para todas las recetas (presupuesto total semanal): ${budget}
-      Instrucciones adicionales:
-      - No incluyas ingredientes de cocina comunes como sal y aceite en la lista de ingredientes.
-      - Proporciona las cantidades necesarias en gramos o unidades dependiendo del ingrediente para cocinar dos porciones de cada receta.`;
+     Genera 7 recetas de almuerzos innovadoras y variadas. Ten en cuenta los siguientes parámetros para estas recetas:
+    ${caloricExpenditureMessage}
+    2. Tipo de cuerpo: ${body}
+    3. Objetivo: ${objective}
+    4. Dieta: ${diet}
+  ${allergiesMessage}
+  ${intoleranceMessage}
+  ${conditionsMessage}
+  8. Presupuesto total para todas las recetas (presupuesto total semanal): ${budget}
+  Instrucciones adicionales:
+  - Asegúrate de que las recetas sean variadas y representen diferentes tipos de cocinas del mundo.
+  - No incluyas ingredientes comunes de cocina como sal y aceite en la lista de ingredientes.
+  - Proporciona las cantidades necesarias en gramos o unidades dependiendo del ingrediente para cocinar dos porciones de cada receta.`;
 
     const response = await generateObject({
       model: google("models/gemini-1.5-flash-latest"),

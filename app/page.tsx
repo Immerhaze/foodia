@@ -7,6 +7,7 @@ import EmailForm from "@/app/ui/components/emailForm";
 import PdfForm from "./ui/components/pdfForm";
 import { PageSkeleton } from "./ui/components/pagesSkeleton";
 import { FunctionalBtn } from "./ui/components/functionalBtn";
+import { shouldUseFlatConfig } from "eslint/use-at-your-own-risk";
 
 export default function Page() {
   const { error } = useStore();
@@ -15,11 +16,8 @@ export default function Page() {
   const [ShowForm, setShowForm] = useState(false);
   const store = useStore();
 
-  const handleShowForm = (value: boolean) => {
-    if (error == "") {
-      setShowForm(value);
-    }
-  };
+  console.log("show forms:", ShowForm);
+  console.log("show current error:", error);
 
   // Handler for when recipes are generated and ready to show
   const handleRecipesGenerated = useCallback((newRecipes: any[]) => {
@@ -27,8 +25,11 @@ export default function Page() {
     setShowRecipes(true); // Show recipes when they are generated
   }, []);
 
-  function handleFormMobileToggle(state: boolean) {
-    setShowForm(!state);
+  function handleFormMobileOn() {
+    setShowForm(true);
+  }
+  function handleFormMobileOff() {
+    setShowForm(false);
   }
 
   function handleMobileBackToForm() {
@@ -44,12 +45,13 @@ export default function Page() {
       >
         <SideNav
           onRecipesGenerated={handleRecipesGenerated}
-          showform={handleShowForm}
+          showform={handleFormMobileOff}
+          showFormOn={handleFormMobileOn}
         />
       </div>
       <div
         className={`h-full md:w-2/3 lg:w-calc-100-minus-384px md:flex md:flex-col md:justify-center ${
-          ShowForm ? "hidden md:block" : "block"
+          !ShowForm ? "block" : "hidden md:block"
         }`}
       >
         {!ShowForm && store.apiRunning ? (
@@ -81,7 +83,7 @@ export default function Page() {
                 <EmailForm recipeslist={recipes} />
                 <PdfForm recipes={recipes} />
                 <FunctionalBtn
-                  fn={() => handleMobileBackToForm()}
+                  fn={() => handleFormMobileOn()}
                   text="Repetir"
                   classNameIcon="icon-[icon-park-twotone--back] text-white"
                   classNameBtn="font-semibold bg-chart_emerald_light text-white"
@@ -114,7 +116,7 @@ export default function Page() {
                   Descubre recetas hechas para ti.
                 </h3>
                 <FunctionalBtn
-                  fn={() => handleFormMobileToggle(ShowForm)}
+                  fn={() => handleFormMobileOn()}
                   text=" Ir a formulario"
                   classNameIcon="icon-[lets-icons--form-duotone-line] text-black"
                   classNameBtn="font-semibold md:hidden"

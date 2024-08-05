@@ -88,13 +88,17 @@ const PdfForm: React.FC<EmailFormProps> = ({ recipes }) => {
           </div>
           <div className="flex items-center justify-between">
             <PDFDownloadLink
+              className="w-full"
               document={
                 <MyDocument username={formData.username} recipes={recipes} />
               }
               fileName={`Mealtaim_${formData.username}.pdf`}
             >
               {({ loading }) => (
-                <span className="w-full bg-accent_color_light hover:bg-semantic_green_light text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <span className="w-full flex flex-row justify-center items-center gap-2 bg-accent_color_light lg:hover:bg-semantic_green_light text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                  {!loading && (
+                    <span className="icon-[icon-park-twotone--success] text-2xl text-white"></span>
+                  )}
                   {loading ? "Generando PDF..." : "Descargar PDF"}
                 </span>
               )}

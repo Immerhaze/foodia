@@ -200,6 +200,8 @@ export function InputSection({ arr }: InputSectionProps) {
     presupuesto: [minValue.toString()], // Initialize presupuesto with minValue as a string
   });
 
+  console.log("selectedValues:", selectedValues);
+
   const [inputValues, setInputValues] = useState<{
     [key: number]: string;
   }>({});
@@ -207,6 +209,10 @@ export function InputSection({ arr }: InputSectionProps) {
   useEffect(() => {
     // Ensure you handle both conditions properly
     if (store.apiRunning === false && store.body !== null) {
+      setSelectedValues({
+        presupuesto: [minValue.toString()], // Adjust this based on your requirements
+      });
+    } else if (store.error) {
       setSelectedValues({
         presupuesto: [minValue.toString()], // Adjust this based on your requirements
       });

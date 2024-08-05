@@ -77,18 +77,10 @@ export const EmailTemplate = ({
               style={section}
               className="w-full bg-[#45E18D] relative flex flex-row rounded-tl-xl rounded-tr-xl overflow-hidden border-t-2 border-l-2 border-[#e6e6e6]"
             >
-              <Column className="min-w-1/2  bg-[#3ecb7f] pl-4">
+              <Column className="min-w-full  bg-[#3ecb7f] pl-4">
                 <Text className="text-6xl text-white">
                   ¡Disfruta Cocinando!
                 </Text>
-              </Column>
-              <Column className="w-1/2">
-                <Img
-                  src="\pdfImages\topimage.png"
-                  alt="Illustration of two people eating food at a table"
-                  width="300"
-                  height="300"
-                />
               </Column>
             </Section>
 

@@ -149,15 +149,15 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
           </div>
           <div className="flex items-center justify-between">
             <span
-              className="bg-accent_color_light hover:bg-semantic_green_light text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className=" w-full flex justify-center items-center bg-accent_color_light lg:hover:bg-semantic_green_light text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               onClick={handleSubmit}
             >
               {loading ? (
                 "Enviando e-mail..."
               ) : sent ? (
-                <span>
-                  <span className="icon-[icon-park-twotone--success] text-semantic_green_light"></span>
-                  Enviado
+                <span className="w-full flex flex-row justify-center items-center gap-2">
+                  <span className="icon-[icon-park-twotone--success] text-2xl text-white"></span>
+                  ¡ Enviado !
                 </span>
               ) : (
                 "Enviar al e-mail"
