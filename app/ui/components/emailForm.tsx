@@ -60,7 +60,7 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${process.env.API_SEND_URL}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_SEND_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
