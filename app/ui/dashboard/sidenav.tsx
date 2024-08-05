@@ -392,6 +392,13 @@ export default function SideNav({
       store.setMobileConsult(true);
       onRecipesGenerated(response);
       store.setapiRunning(false);
+      if (window.innerWidth <= 768) {
+        // Check if the device is mobile
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
     } catch (error) {
       console.error("Error generating recipes:", error);
       store.setapiRunning(false);
@@ -433,13 +440,6 @@ export default function SideNav({
         <form
           onSubmit={(e) => {
             e.preventDefault(); // Prevent default form submission behavior
-            if (window.innerWidth <= 768) {
-              // Check if the device is mobile
-              window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-              });
-            }
             checkStore();
           }}
           className="w-full flex flex-col justify-center items-center pb-5"
