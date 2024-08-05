@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
         : "";
 
     const prompt = `
-      Genera 7 recetas de almuerzos diferentes. Ten en cuenta los siguientes parámetros para estas recetas:
+      Genera 4 recetas de almuerzos diferentes. Ten en cuenta los siguientes parámetros para estas recetas:
       ${caloricExpenditureMessage}
       2. Tipo de cuerpo: ${body}
       3. Objetivo: ${objective}
