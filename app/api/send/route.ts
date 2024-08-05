@@ -2,6 +2,7 @@ import { EmailTemplate } from "@/emails/email-template";
 import { Resend } from "resend";
 import * as React from "react";
 import { ingredientList } from "@/lib/utils";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request, res: Response) {
   console.log("starting to send email");
@@ -415,11 +416,11 @@ export async function POST(request: Request, res: Response) {
     });
 
     if (error) {
-      return Response.json({ error }, { status: 500 });
+      return NextResponse.json({ success: false, error: error });
     }
 
-    return Response.json({ data });
+    return NextResponse.json({ success: true, response: data });
   } catch (error) {
-    return Response.json({ error }, { status: 500 });
+    return NextResponse.json({ success: false, error: error });
   }
 }

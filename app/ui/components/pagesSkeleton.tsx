@@ -30,12 +30,7 @@ export function PageSkeleton() {
           classnameBtn
         )}
       >
-        <span
-          className={cn(
-            `icon-[${icon}] text-3xl md:text-4xl mr-2`,
-            classNameIcon
-          )}
-        ></span>
+        <span className={cn(`text-3xl md:text-4xl mr-2`, classNameIcon)}></span>
         <div className="animate-pulse rounded-md bg-muted h-4 md:h-8 w-[70%] bg-slate-500/30"></div>
       </span>
     );

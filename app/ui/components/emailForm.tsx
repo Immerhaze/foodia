@@ -97,8 +97,7 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
       <PopoverTrigger>
         <FunctionalBtn
           text="Enviar a E-mail"
-          icon="mdi--email-arrow-right"
-          classNameIcon="text-black"
+          classNameIcon="icon-[mdi--email-arrow-right] text-black"
           classNameBtn="font-semibold"
         />
       </PopoverTrigger>

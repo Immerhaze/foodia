@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 
 interface FunctionalBtnProps {
-  icon: string;
   classNameIcon?: string;
   classNameBtn?: string;
   text?: string;
@@ -9,7 +8,6 @@ interface FunctionalBtnProps {
 }
 
 export function FunctionalBtn({
-  icon,
   classNameIcon,
   classNameBtn,
   text,
@@ -23,12 +21,7 @@ export function FunctionalBtn({
         classNameBtn
       )}
     >
-      <span
-        className={cn(
-          `icon-[${icon}] text-3xl md:text-4xl mr-2`,
-          classNameIcon
-        )}
-      ></span>
+      <span className={cn(`text-3xl md:text-4xl mr-2`, classNameIcon)}></span>
       <p>{text}</p>
     </span>
   );

@@ -332,8 +332,7 @@ export default function SideNav({
       <FunctionalBtn
         fn={() => showform(false)}
         text="Inicio"
-        icon="icon-park-twotone--back"
-        classNameIcon="text-semantic_green_light"
+        classNameIcon="icon-[icon-park-twotone--back] text-semantic_green_light"
         classNameBtn="w-full text-xl font-semibold px-1 md:hidden"
       />
       <div className=" overflow-y-scroll overflow-x-hidden input-scrollbar flex grow flex-col py-2 justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">

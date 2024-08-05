@@ -119,14 +119,12 @@ export function RecipesCards({ recipes }: RecipesProps) {
       <div className="flex w-full h-20 px-2 flex-row justify-between items-center">
         <FunctionalBtn
           fn={scrollPrev}
-          icon="material-symbols--arrow-back"
-          classNameIcon="text-black"
+          classNameIcon="icon-[ion--arrow-back-outline] text-black"
           classNameBtn="text-xl font-semibold w-1/4 md:h-2/3"
         />
         <FunctionalBtn
           fn={scrollNext}
-          icon="material-symbols--arrow-forward"
-          classNameIcon="text-black"
+          classNameIcon=" icon-[ion--arrow-forward] text-black"
           classNameBtn="text-xl font-semibold w-1/4 md:h-2/3"
         />
       </div>

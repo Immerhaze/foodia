@@ -465,8 +465,7 @@ export default function Page() {
                 <FunctionalBtn
                   fn={() => handleMobileBackToForm()}
                   text="Repetir"
-                  icon="lets-icons--back"
-                  classNameIcon="text-white"
+                  classNameIcon="icon-[icon-park-twotone--back] text-white"
                   classNameBtn="font-semibold bg-chart_emerald_light text-white"
                 />
               </div>
@@ -503,8 +502,7 @@ export default function Page() {
                 <FunctionalBtn
                   fn={() => handleFormMobileToggle(ShowForm)}
                   text=" Ir a formulario"
-                  icon="fluent--form-new-20-filled"
-                  classNameIcon="text-black "
+                  classNameIcon="icon-[lets-icons--form-duotone-line] text-black"
                   classNameBtn="font-semibold md:hidden"
                 />
               </div>
