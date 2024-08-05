@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className={`${inter.className} antialiased bg-dashboard_light`}>
+      <body className={`${inter.className} antialiased `}>
         {children}
         <Analytics />
         <SpeedInsights />

@@ -6,6 +6,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Resend } from "resend";
+import { FunctionalBtn } from "./functionalBtn";
 
 type Ingredient = {
   name: string;
@@ -56,9 +57,7 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
   };
 
   // Validate form data and handle submission
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     try {
       setLoading(true);
       const response = await fetch("http://localhost:3001/api/send", {
@@ -96,16 +95,15 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <span className="font-bold tracking-wide w-full text-xl bg-white border-2 p-2 rounded-xl shadow-sm shadow-semantic_green_light">
-          <span className="icon-[mdi--email-arrow-right] text-xl mr-2"></span>
-          Enviar al E-mail
-        </span>
+        <FunctionalBtn
+          text="Enviar a E-mail"
+          icon="mdi--email-arrow-right"
+          classNameIcon="text-black"
+          classNameBtn="font-semibold"
+        />
       </PopoverTrigger>
       <PopoverContent className="bg-accent_color_light/50">
-        <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          onSubmit={handleSubmit}
-        >
+        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -153,21 +151,21 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
             )}
           </div>
           <div className="flex items-center justify-between">
-            <button
+            <span
               className="bg-accent_color_light hover:bg-semantic_green_light text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
+              onClick={handleSubmit}
             >
               {loading ? (
-                "Enviando Email..."
+                "Enviando e-mail..."
               ) : sent ? (
                 <span>
                   <span className="icon-[icon-park-twotone--success] text-semantic_green_light"></span>
                   Enviado
                 </span>
               ) : (
-                "Enviar al E-mail"
+                "Enviar al e-mail"
               )}
-            </button>
+            </span>
           </div>
           {successMessage && (
             <p className="text-green-500 text-xs italic mt-2">

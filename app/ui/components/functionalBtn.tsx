@@ -1,0 +1,35 @@
+import { cn } from "@/lib/utils";
+
+interface FunctionalBtnProps {
+  icon: string;
+  classNameIcon?: string;
+  classNameBtn?: string;
+  text?: string;
+  fn?: (arg: any) => void;
+}
+
+export function FunctionalBtn({
+  icon,
+  classNameIcon,
+  classNameBtn,
+  text,
+  fn,
+}: FunctionalBtnProps) {
+  return (
+    <span
+      onClick={fn} // Use the fn prop as the onClick handler
+      className={cn(
+        `w-60 md:w-44 lg:w-52 h-8 rounded-xl flex flex-row justify-center items-center shadow-semantic_green_light shadow-sm bg-widget_light cursor-pointer`,
+        classNameBtn
+      )}
+    >
+      <span
+        className={cn(
+          `icon-[${icon}] text-3xl md:text-4xl mr-2`,
+          classNameIcon
+        )}
+      ></span>
+      <p>{text}</p>
+    </span>
+  );
+}

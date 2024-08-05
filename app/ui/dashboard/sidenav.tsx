@@ -4,7 +4,7 @@ import { InputSection } from "@/app/ui/components/input-buttons";
 import useStore from "@/app/store";
 import { generateRecipes } from "@/lib/generateRecipes";
 import { GetDiario } from "@/lib/utils";
-import { Button } from "../button";
+import { FunctionalBtn } from "../components/functionalBtn";
 
 interface SideNavProps {
   onRecipesGenerated: (recipes: any[]) => void;
@@ -65,20 +65,24 @@ export default function SideNav({
       subtitle: null,
       arr: [
         {
-          title: "Ninguna",
+          title: "Sedentario",
           subtext: null,
+          tooltip: "Poco o nada de ejercicio.",
         },
         {
           title: "Baja",
           subtext: null,
+          tooltip: "1 a 3 días en la semana",
         },
         {
           title: "Moderada",
           subtext: null,
+          tooltip: "3 a 5 días en la semana",
         },
         {
           title: "Intensa",
           subtext: null,
+          tooltip: "6 a 7 días en la semana",
         },
       ],
     },
@@ -104,14 +108,17 @@ export default function SideNav({
         {
           title: "Ectomorfo",
           icon: "icon-[ion--body]",
+          tooltip: "Cuesta ganar peso y músculo.",
         },
         {
           title: "Endomorfo",
           icon: "icon-[ion--body]",
+          tooltip: "Facilidad para ganar peso, metabolismo lento.",
         },
         {
           title: "Mesomorfo",
           icon: "icon-[ion--body]",
+          tooltip: "Ganan músculo fácilmente y tienen un cuerpo tonificado.",
         },
       ],
     },
@@ -122,26 +129,38 @@ export default function SideNav({
         {
           title: "Omnivora",
           icon: "icon-[dashicons--food]",
+          tooltip:
+            "Omnívoro: Come tanto alimentos de origen animal como vegetal.",
         },
         {
           title: "Lactoveg",
           icon: "icon-[icon-park-solid--milk-one]",
+          tooltip:
+            "Lactovegetariano: Come vegetales y productos lácteos, pero no huevos ni carne.",
         },
         {
           title: "Ovoveg",
           icon: "icon-[bi--egg-fried]",
+          tooltip:
+            "Ovovegetariano: Come vegetales y huevos, pero no lácteos ni carne.:",
         },
         {
           title: "Lactoovoveg",
           icon: "icon-[file-icons--cake]",
+          tooltip:
+            "Lacto-ovo-vegetariano: Come vegetales, lácteos y huevos, pero no carne.",
         },
         {
           title: "Pescetariana",
           icon: "icon-[ion--fish]",
+          tooltip:
+            "Pescetariano: Come vegetales y pescado, pero no otras carnes.",
         },
         {
           title: "Vegana",
           icon: "icon-[fluent--bowl-salad-24-filled]",
+          tooltip:
+            "Vegano: Solo come alimentos de origen vegetal, sin productos animales ni derivados.",
         },
       ],
     },
@@ -190,18 +209,26 @@ export default function SideNav({
         {
           title: "Lactosa",
           icon: "icon-[icon-park-solid--cheese]",
+          tooltip:
+            "Dificultad para digerir el azúcar presente en la leche y productos lácteos.",
         },
         {
           title: "Gluten",
           icon: "icon-[healthicons--gluten]",
+          tooltip:
+            "Reacción adversa al gluten, una proteína en el trigo, la cebada y el centeno.",
         },
         {
           title: "Fructosa",
           icon: "icon-[mdi--fruit-watermelon]",
+          tooltip:
+            "Dificultad para absorber la fructosa, un azúcar presente en frutas, miel y algunos vegetales.",
         },
         {
           title: "Histamina",
           icon: "icon-[file-icons--precision]",
+          tooltip:
+            "Reacción adversa a la histamina, una sustancia presente en alimentos fermentados y procesados.",
         },
       ],
     },
@@ -212,22 +239,30 @@ export default function SideNav({
         {
           title: "Diabetes",
           icon: "icon-[mdi--diabetes]",
+          tooltip: "Afecta la regulación del azúcar en la sangre",
         },
         {
-          title: "Enfermedad cardiovascular",
+          title: "Enf. cardiovascular",
           icon: "icon-[material-symbols--cardio-load]",
+          tooltip: "Trastornos que afectan el corazón y los vasos sanguíneo",
         },
         {
-          title: "Enfermedad renal",
+          title: "Enf. renal",
           icon: "icon-[material-symbols--nephrology]",
+          tooltip:
+            "Afección que daña los riñones y afecta su capacidad para filtrar desechos de la sangre.",
         },
         {
           title: "Hipertensión",
           icon: "icon-[icon-park-solid--electrocardiogram]",
+          tooltip:
+            "Presión arterial alta que aumenta el riesgo de enfermedades cardíacas y accidentes cerebrovasculares.",
         },
         {
           title: "Intestino irritable",
           icon: "icon-[healthicons--intestine]",
+          tooltip:
+            "Trastorno digestivo que causa dolor abdominal, hinchazón y cambios en los hábitos intestinales.",
         },
       ],
     },
@@ -294,11 +329,13 @@ export default function SideNav({
           </h1>
         </div>
       </span>
-      <Button className="h-20 md:hidden" onClick={() => showform(false)}>
-        <span className="icon-[icon-park-twotone--back] text-semantic_green_light text-xl mr-2"></span>
-        <h1 className="text-2xl">Pagina de inicio</h1>
-      </Button>
-
+      <FunctionalBtn
+        fn={() => showform(false)}
+        text="Inicio"
+        icon="icon-park-twotone--back"
+        classNameIcon="text-semantic_green_light"
+        classNameBtn="w-full text-xl font-semibold px-1 md:hidden"
+      />
       <div className=" overflow-y-scroll overflow-x-hidden input-scrollbar flex grow flex-col py-2 justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <InputSection arr={sections} />
         <form
@@ -316,23 +353,23 @@ export default function SideNav({
           }}
           className="w-full flex flex-col justify-center items-center"
         >
-          <Button
+          <button
             type="submit" // Change type to submit
             disabled={store.apiRunning}
-            className="h-[48px] "
+            className="h-[48px] w-[80%] border-2 border-accent_color_light text-accent_color_light flex flex-row justify-center items-center"
           >
             {store.apiRunning ? (
               //
               <span>CARGANDO</span>
             ) : (
               <>
-                <span className="flex flex-row justify-center items-center text-xl gap-4">
+                <span className="flex flex-row justify-center items-center text-lg gap-4">
                   CONSULTAR
-                  <span className="icon-[material-symbols--send] "></span>
+                  <span className="icon-[material-symbols--send] text-semantic_green_light "></span>
                 </span>
               </>
             )}
-          </Button>
+          </button>
           {error && (
             <p className="text-red-600 text-xs font-semibold px-2  py-2 text-center">
               {error}

@@ -2,10 +2,17 @@ import { ReactNode, useState, useEffect } from "react";
 import clsx from "clsx";
 import { Slider } from "@/components/ui/slider";
 import useStore from "@/app/store";
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 
 // INPUT BUTTON COMPONENT FROM THE FORM
 interface InputButtonProps {
   title: string | ReactNode;
+  tooltip: string | ReactNode;
   icon: string | ReactNode;
   index: number;
   onSelection: (title: string | ReactNode, isSelected: boolean) => void;
@@ -16,6 +23,7 @@ interface InputButtonProps {
 
 export function InputButton({
   title,
+  tooltip,
   icon,
   index,
   onSelection,
@@ -98,18 +106,31 @@ export function InputButton({
   }
 
   return (
-    <button
-      onClick={handleClick}
-      className={clsx(
-        "button_input rounded-lg border-[1px] border-light w-1/2 md:w-1/3 flex flex-col justify-center items-center  m-2 text-ellipsis overflow-hidden transition-colors duration-300",
-        getBackgroundColorClass()
-      )}
-    >
-      <span className={`${icon}`}></span>
-      {typeof title === "string" ? (
-        <h1 className="text-xs text-left break-words uppercase ">{title}</h1>
-      ) : null}
-    </button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger className="w-[45%] h-16 m-1 p-1 flex justify-center">
+          <div
+            onClick={handleClick}
+            className={clsx(
+              "button_input rounded-lg shadow-sm border-[0.5px]  shadow-semantic_green_light/50 h-full w-full  flex flex-col justify-center items-center text-ellipsis overflow-hidden transition-colors duration-300 ",
+              getBackgroundColorClass()
+            )}
+          >
+            <span className={`${icon}`}></span>
+            {typeof title === "string" ? (
+              <h1 className="w-full text-[8px] md:text-[10px] lg:text-xs text-ellipsis overflow-hidden text-center uppercase ">
+                {title}
+              </h1>
+            ) : null}
+          </div>
+        </TooltipTrigger>
+        {tooltip !== undefined && (
+          <TooltipContent>
+            <p className="text-center">{tooltip}</p>
+          </TooltipContent>
+        )}
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -117,7 +138,11 @@ export function InputButton({
 interface SectionItem {
   title: string | ReactNode;
   subtitle?: string | ReactNode;
-  arr: { title: string | ReactNode; icon?: string | ReactNode }[];
+  arr: {
+    title: string | ReactNode;
+    icon?: string | ReactNode;
+    tooltip?: string | ReactNode;
+  }[];
 }
 
 interface InputSectionProps {
@@ -277,11 +302,12 @@ export function InputSection({ arr }: InputSectionProps) {
               : TitleToEsp(input.title)}
           </h1>
           {input.subtitle && <h3>{input.subtitle}</h3>}
-          <div className="flex flex-wrap justify-center bg-white rounded-xl">
+          <div className="flex flex-wrap justify-center p-1 rounded-xl">
             {input.arr.map((btn, btnIndex) => (
               <InputButton
                 key={btnIndex}
                 title={btn.title}
+                tooltip={btn.tooltip}
                 icon={btn.icon}
                 index={index}
                 onSelection={(itemTitle, isSelected) =>
@@ -298,9 +324,12 @@ export function InputSection({ arr }: InputSectionProps) {
           </div>
         </div>
       ))}
-      <div className="shadow-sm p-6 flex flex-col gap-3 border-primary_text_light/10 border-t-2">
-        <h1 className="text-xl text-accent_color_light uppercase font-medium tracking-wide text-left">
-          Presupuesto
+      <div className="shadow-sm p-2 flex flex-col gap-3 border-primary_text_light/10 border-t-2">
+        <h1
+          className={`text-xl text-accent_color_light
+           uppercase font-medium tracking-wide text-center md:text-left`}
+        >
+          Presupuesto Semanal
         </h1>
         <div className="w-full flex flex-row justify-start items-center gap-2">
           <p className="text-base font-semibold">$</p>
@@ -331,8 +360,8 @@ export function InputSection({ arr }: InputSectionProps) {
           />
         </div>
         <div className="w-full flex flex-row justify-center items-center">
-          <p className="text-base font-semibold">Min: {minValue} - </p>
-          <p className="text-base font-semibold ml-1">Max: {maxValue}</p>
+          <p className="text-sm font-semibold">Min: {minValue} - </p>
+          <p className="text-sm font-semibold ml-1">Max: {maxValue}</p>
         </div>
       </div>
     </>

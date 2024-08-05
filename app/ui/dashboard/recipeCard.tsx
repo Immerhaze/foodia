@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { sumKca } from "@/lib/utils";
+import { FunctionalBtn } from "../components/functionalBtn";
 
 interface Ingredient {
   name: string;
@@ -46,14 +47,17 @@ export function RecipesCards({ recipes }: RecipesProps) {
 
   return (
     <div
-      className="embla w-full h-4/6 md:h-5/6 overflow-hidden flex flex-col"
+      style={{ height: "calc(100% - 64px)" }}
+      className="embla w-full md:h-4/6 md:px-2 overflow-hidden flex flex-col"
       ref={emblaRef}
     >
-      <div className="embla__container h-2/3 flex flex-row items-center">
+      <div className="embla__container w-full h-full  p-4 flex flex-row items-center">
         {recipes.map((recipe, index) => (
           <div
             key={index}
-            className="embla__slide h-[350px] md:h-full bg-widget_light flex-[0_0_100%] md:flex-[0_0_50%] rounded-xl shadow-md mx-2 overflow-hidden overflow-y-auto"
+            className={`embla__slide h-[350px] ${
+              index == 0 && " relative right-[8px]"
+            } md:h-full bg-widget_light flex-[0_0_100%] lg:flex-[0_0_45%] rounded-xl shadow-md mx-2 overflow-hidden overflow-y-auto`}
           >
             <h1 className="text-xl h-20 font-bold tracking-wide mb-6 p-2 bg-accent_color_light flex justify-center items-center text-center text-white">
               {recipe.title}
@@ -112,19 +116,19 @@ export function RecipesCards({ recipes }: RecipesProps) {
           </div>
         ))}
       </div>
-      <div className="flex w-full h-10 flex-row justify-between items-center">
-        <button
-          className="embla__prev h-1/2 shadow-semantic_green_light shadow-sm bg-widget_light flex justify-center items-center"
-          onClick={scrollPrev}
-        >
-          <span className="icon-[material-symbols--arrow-back] text-2xl"></span>
-        </button>
-        <button
-          className="embla__next h-1/2 shadow-semantic_green_light shadow-sm bg-widget_light flex justify-center items-center"
-          onClick={scrollNext}
-        >
-          <span className="icon-[material-symbols--arrow-forward] text-2xl"></span>
-        </button>
+      <div className="flex w-full h-20 px-2 flex-row justify-between items-center">
+        <FunctionalBtn
+          fn={scrollPrev}
+          icon="material-symbols--arrow-back"
+          classNameIcon="text-black"
+          classNameBtn="text-xl font-semibold w-1/4 md:h-2/3"
+        />
+        <FunctionalBtn
+          fn={scrollNext}
+          icon="material-symbols--arrow-forward"
+          classNameIcon="text-black"
+          classNameBtn="text-xl font-semibold w-1/4 md:h-2/3"
+        />
       </div>
     </div>
   );

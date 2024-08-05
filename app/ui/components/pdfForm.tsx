@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/popover";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import MyDocument from "@/components/pdf/pdfDoc";
+import { FunctionalBtn } from "./functionalBtn";
 
 type Ingredient = {
   name: string;
@@ -51,10 +52,12 @@ const PdfForm: React.FC<EmailFormProps> = ({ recipes }) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <span className="font-bold tracking-wide w-full text-xl bg-white border-2 p-2 rounded-xl shadow-sm shadow-semantic_green_light">
-          <span className="icon-[dashicons--pdf] text-xl mr-2"></span>
-          Descargar PDF
-        </span>
+        <FunctionalBtn
+          text="Descargar PDF"
+          icon="dashicons--pdf"
+          classNameIcon="text-black"
+          classNameBtn="font-semibold "
+        />
       </PopoverTrigger>
       <PopoverContent className="bg-accent_color_light/50">
         <form
@@ -92,13 +95,9 @@ const PdfForm: React.FC<EmailFormProps> = ({ recipes }) => {
               fileName={`Mealtaim_${formData.username}.pdf`}
             >
               {({ loading }) => (
-                <button
-                  className="w-full bg-accent_color_light hover:bg-semantic_green_light text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  type="button"
-                  disabled={loading}
-                >
+                <span className="w-full bg-accent_color_light hover:bg-semantic_green_light text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                   {loading ? "Generando PDF..." : "Descargar PDF"}
-                </button>
+                </span>
               )}
             </PDFDownloadLink>
           </div>

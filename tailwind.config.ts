@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      width: {
+        "calc-100-minus-384px": "calc(100% - 384px)",
+      },
       backgroundImage: {
         "custom-background": "url('/backgroundlanding.jpg')",
       },
