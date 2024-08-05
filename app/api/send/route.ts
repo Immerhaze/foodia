@@ -403,7 +403,7 @@ export async function POST(request: Request, res: Response) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     const { data, error } = await resend.emails.send({
-      from: "Mealtaim <onboarding@resend.dev>",
+      from: "Mealtaim <recetas@mealtaim.online>",
       to: [`${formdata.email}`],
       subject: "Recetas creadas para ti!",
       // react: render(EmailTemplate() as React.ReactElement),

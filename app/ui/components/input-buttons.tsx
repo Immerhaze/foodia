@@ -165,6 +165,16 @@ export function InputSection({ arr }: InputSectionProps) {
     [key: number]: string;
   }>({});
 
+  useEffect(() => {
+    // Ensure you handle both conditions properly
+    if (store.apiRunning === false && store.body !== null) {
+      setSelectedValues({
+        presupuesto: [minValue.toString()], // Adjust this based on your requirements
+      });
+    }
+    // No need for an `else return;`, the `return;` is not needed here.
+  }, [store.apiRunning, store.body]); // Add `store.body` to dependencies
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     if (!isNaN(value)) {

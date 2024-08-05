@@ -5,7 +5,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Resend } from "resend";
 import { FunctionalBtn } from "./functionalBtn";
 
 type Ingredient = {
@@ -31,7 +30,6 @@ type EmailFormProps = {
   recipeslist: Recipe[];
 };
 
-// Define the Zod schema
 const formSchema = z.object({
   username: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
   email: z.string().email("Debe ser un correo electrónico válido"),
@@ -47,16 +45,14 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
     email?: string;
   }>({});
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean | null>(null);
-  const [sent, setSent] = useState<boolean | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [sent, setSent] = useState<boolean>(false);
 
-  // Handle form changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
-  // Validate form data and handle submission
   const handleSubmit = async () => {
     try {
       setLoading(true);
@@ -70,25 +66,27 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
 
       if (response.ok) {
         const data = await response.json();
-        setLoading(false);
-        setFormData({ username: "", email: "" });
         console.log("Email sent successfully:", data);
         setSent(true);
+        setSuccessMessage("Email enviado con éxito"); // Optional
+        setTimeout(() => {
+          setSent(false);
+          setSuccessMessage(null); // Clear success message if needed
+        }, 3000);
       } else {
         const error = await response.json();
         console.error("Error sending email:", error);
-        setLoading(false);
+        setSuccessMessage(null); // Clear success message on error
       }
     } catch (error) {
       console.error("Error:", error);
-      setLoading(false);
+      setSuccessMessage(null); // Clear success message on error
     } finally {
+      setLoading(false);
       setFormData({
         email: "",
         username: "",
       });
-      setLoading(false);
-      setSent(false);
     }
   };
 
