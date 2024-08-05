@@ -17,7 +17,7 @@ export function FunctionalBtn({
     <span
       onClick={fn} // Use the fn prop as the onClick handler
       className={cn(
-        `w-60 md:w-44 lg:w-52 h-8 rounded-xl flex flex-row justify-center items-center shadow-semantic_green_light shadow-sm bg-widget_light cursor-pointer`,
+        `rounded-xl flex flex-row justify-center items-center shadow-semantic_green_light shadow-sm bg-widget_light cursor-pointer`,
         classNameBtn
       )}
     >

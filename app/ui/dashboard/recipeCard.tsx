@@ -47,11 +47,10 @@ export function RecipesCards({ recipes }: RecipesProps) {
 
   return (
     <div
-      style={{ height: "calc(100% - 64px)" }}
-      className="embla w-full md:h-4/6 md:px-2 overflow-hidden flex flex-col"
+      className="embla w-full h-[66.666666%] md:h-4/6 md:px-2 overflow-hidden flex flex-col"
       ref={emblaRef}
     >
-      <div className="embla__container w-full h-full  p-4 flex flex-row items-center">
+      <div className="embla__container w-full h-5/6 bg-green-500  p-4 flex flex-row items-center">
         {recipes.map((recipe, index) => (
           <div
             key={index}
@@ -116,16 +115,16 @@ export function RecipesCards({ recipes }: RecipesProps) {
           </div>
         ))}
       </div>
-      <div className="flex w-full h-20 px-2 flex-row justify-between items-center">
+      <div className="flex w-full bg-pink-400 h-1/6 px-2 flex-row justify-between items-center">
         <FunctionalBtn
           fn={scrollPrev}
           classNameIcon="icon-[ion--arrow-back-outline] text-black"
-          classNameBtn="text-xl font-semibold w-1/4 md:h-2/3"
+          classNameBtn="text-xl font-semibold w-1/4 md:h-[50%]"
         />
         <FunctionalBtn
           fn={scrollNext}
           classNameIcon=" icon-[ion--arrow-forward] text-black"
-          classNameBtn="text-xl font-semibold w-1/4 md:h-2/3"
+          classNameBtn="text-xl font-semibold w-1/4 md:h-[50%]"
         />
       </div>
     </div>

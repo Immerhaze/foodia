@@ -12,6 +12,10 @@ const config: Config = {
       width: {
         "calc-100-minus-384px": "calc(100% - 384px)",
       },
+      height: {
+        "calc-100-minus-40px": "calc(100% - 40px)",
+        "calc-100-minus-h16": "calc(100% - 16.666667% - 16.666667%)",
+      },
       backgroundImage: {
         "custom-background": "url('/backgroundlanding.jpg')",
       },

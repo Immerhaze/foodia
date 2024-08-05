@@ -72,6 +72,7 @@ export async function POST(req: NextRequest) {
        8. Presupuesto total para todas las recetas (presupuesto total semanal): ${budget}
        Lo más importante es que las recetas se basen en la dieta, alergias e intolerancias proporcionadas.
        Instrucciones adicionales:
+       los pasos a seguir para cocinar que sean lo mas concisos posible
        - Asegúrate de que las recetas sean variadas y representen diferentes tipos de cocinas del mundo.
        - No incluyas ingredientes comunes de cocina como sal y aceite en la lista de ingredientes.
        - Proporciona las cantidades necesarias en gramos o unidades dependiendo del ingrediente para cocinar dos porciones de cada receta.

@@ -5,9 +5,6 @@ import useStore from "@/app/store";
 import { GetDiario } from "@/lib/utils";
 import { FunctionalBtn } from "../components/functionalBtn";
 import Link from "next/link";
-import { ToastAction } from "@/components/ui/toast";
-import { useToast } from "@/components/ui/use-toast";
-import { Toaster } from "@/components/ui/toaster";
 
 interface SideNavProps {
   onRecipesGenerated: (recipes: any[]) => void;
@@ -272,7 +269,6 @@ export default function SideNav({
       ],
     },
   ];
-  const { toast } = useToast();
   const store = useStore();
   console.log("api running:", store.apiRunning);
   const [error, setError] = useState<string | null>("");
@@ -405,19 +401,11 @@ export default function SideNav({
       showFormOn();
       setError("Hubo un fallo, intenta nuevamente");
       store.setError("fallo de conexión");
-      toast({
-        title: "Error",
-        variant: "destructive",
-        duration: 5000,
-        description:
-          "Inténtalo de nuevo; incluso el mejor chef comete errores.",
-      });
     }
   }
 
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2 bg-widget_light rounded-2xl shadow-xl">
-      <Toaster />
       <span className="hidden border-b-[1px] border-primary_text_light/30 shadow-md shadow-semantic_green_light/30 mb-2 md:flex h-20 justify-center items-center rounded-md p-4 ">
         <div className="w-full text-secondary text-center text-primary_text_light font-normal text-4xl ">
           <h1>
@@ -433,7 +421,7 @@ export default function SideNav({
         fn={showform}
         text="Inicio"
         classNameIcon="icon-[icon-park-twotone--back] text-semantic_green_light"
-        classNameBtn="w-full text-xl font-semibold px-1  h-20 md:hidden"
+        classNameBtn="w-full text-xl font-semibold p-4 h-28 md:hidden mb-2"
       />
       <div className=" overflow-y-scroll overflow-x-hidden input-scrollbar flex grow flex-col py-2 justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <InputSection arr={sections} />

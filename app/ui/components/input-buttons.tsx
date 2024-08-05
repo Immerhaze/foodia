@@ -300,8 +300,15 @@ export function InputSection({ arr }: InputSectionProps) {
       ...prevValues,
       [sectionTitle]: [value],
     }));
-    store.setInput(sectionTitle, value);
   };
+
+  useEffect(() => {
+    const lastKey = Object.keys(selectedValues).pop();
+    if (lastKey) {
+      const lastValue = selectedValues[lastKey];
+      store.setInput(lastKey, lastValue);
+    }
+  }, [selectedValues]);
 
   useEffect(() => {
     if (sliderValue < minValue || sliderValue > maxValue) {
