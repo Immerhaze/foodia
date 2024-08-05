@@ -8,7 +8,7 @@ import "@/app/globals.css";
 
 // Metadata for the page
 export const metadata: Metadata = {
-  title: "FOODIA",
+  title: "Mealtaim",
   description: "Recetas generadas con IA, powered by Vercel's IA-sdk",
 };
 
