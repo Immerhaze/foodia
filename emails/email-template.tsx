@@ -84,7 +84,7 @@ export const EmailTemplate = ({
               </Column>
               <Column className="w-1/2">
                 <Img
-                  src="public\pdfImages\topimage.png"
+                  src="\pdfImages\topimage.png"
                   alt="Illustration of two people eating food at a table"
                   width="300"
                   height="300"

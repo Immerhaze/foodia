@@ -5,7 +5,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import type { Metadata } from "next";
 import "@/app/globals.css";
-import { Toaster } from "@/components/ui/toaster";
 
 // Metadata for the page
 export const metadata: Metadata = {
@@ -25,7 +24,6 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
-        <Toaster />
       </body>
     </html>
   );

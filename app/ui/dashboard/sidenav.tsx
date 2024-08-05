@@ -7,6 +7,7 @@ import { FunctionalBtn } from "../components/functionalBtn";
 import Link from "next/link";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 
 interface SideNavProps {
   onRecipesGenerated: (recipes: any[]) => void;
@@ -334,6 +335,7 @@ export default function SideNav({
       condition,
       budget,
     });
+    setError(null);
 
     // Call GetDiario with the correct arguments
     if (safeGenre == null || weight == null || height == null || age == null) {
@@ -392,6 +394,7 @@ export default function SideNav({
       setError("Hubo un fallo, intenta nuevamente");
       toast({
         title: "Error",
+        variant: "destructive",
         duration: 5000,
         description:
           "Inténtalo de nuevo; incluso el mejor chef comete errores.",
@@ -401,6 +404,7 @@ export default function SideNav({
 
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2 bg-widget_light rounded-2xl shadow-xl">
+      <Toaster />
       <span className="hidden border-b-[1px] border-primary_text_light/30 shadow-md shadow-semantic_green_light/30 mb-2 md:flex h-20 justify-center items-center rounded-md p-4 ">
         <div className="w-full text-secondary text-center text-primary_text_light font-normal text-4xl ">
           <h1>

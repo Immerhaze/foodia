@@ -23,7 +23,7 @@ const TooltipContent = React.forwardRef<
     //   className
     // )}
     className={cn(
-      " hidden lg:block z-50 overflow-hidden rounded-md bg-popover bg-white border-[1px] border-semantic_green_light/40 text-black min-w-52 max-w-52 px-3 py-1.5 text-sm shadow-md animate-in fade-in-0 ",
+      " hidden lg:block z-50 overflow-hidden rounded-md bg-popover  border-[1px] border-semantic_green_light/40 text-black min-w-52 max-w-52 px-3 py-1.5 text-sm shadow-md animate-in fade-in-0 ",
       className
     )}
     {...props}
