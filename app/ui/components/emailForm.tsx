@@ -56,6 +56,7 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
+      // Generate the PDF
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_SEND_URL}`, {
         method: "POST",
         headers: {
@@ -92,7 +93,7 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
 
   return (
     <Popover>
-      <PopoverTrigger className="bg-red-500 py-1 px-1  w-2/3 md:w-1/2 flex justify-center">
+      <PopoverTrigger className="py-1 px-1  w-2/3 md:w-1/2 flex justify-center">
         <FunctionalBtn
           text="Enviar a E-mail"
           classNameIcon="icon-[mdi--email-arrow-right] text-black"

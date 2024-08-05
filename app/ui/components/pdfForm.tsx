@@ -51,7 +51,7 @@ const PdfForm: React.FC<EmailFormProps> = ({ recipes }) => {
 
   return (
     <Popover>
-      <PopoverTrigger className="bg-red-500 py-1 px-1  w-2/3 md:w-1/2 flex justify-center ">
+      <PopoverTrigger className=" py-1 px-1  w-2/3 md:w-1/2 flex justify-center ">
         <FunctionalBtn
           text="Descargar PDF"
           classNameIcon="icon-[ic--twotone-picture-as-pdf] text-black"

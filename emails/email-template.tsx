@@ -246,26 +246,21 @@ export const EmailTemplate = ({
             </Section>
 
             <Section style={{ padding: "20px", textAlign: "center" }}>
-              <Link href="https://www.mealtaim.online/">
-                <Button
-                  style={{
-                    background: "#45E18D", // Button background color
-                    color: "#FFFFFF", // Text color
-                    padding: "16px 32px", // Padding inside the button
-                    textAlign: "center", // Center align text
-                    borderRadius: "4px", // Rounded corners
-                    textDecoration: "none", // Remove underline from the link
-                    display: "inline-block", // Ensure button displays correctly
-                    fontWeight: "bold", // Bold text
-                    fontSize: "16px", // Font size
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
-                  <Text className="text-white text-xl">
-                    Ir a mealtaim.online
-                  </Text>
-                </Button>
-              </Link>
+              <Link
+                style={{
+                  background: "#45E18D", // Button background color
+                  color: "#FFFFFF", // Text color
+                  padding: "16px 32px", // Padding inside the button
+                  textAlign: "center", // Center align text
+                  borderRadius: "4px", // Rounded corners
+                  textDecoration: "none", // Remove underline from the link
+                  display: "inline-block", // Ensure button displays correctly
+                  fontWeight: "bold", // Bold text
+                  fontSize: "16px", // Font size
+                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                }}
+                href="https://www.mealtaim.online/"
+              ></Link>
             </Section>
           </Container>
         </Body>

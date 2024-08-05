@@ -50,7 +50,7 @@ export function RecipesCards({ recipes }: RecipesProps) {
       className="embla w-full h-[66.666666%] md:h-4/6 md:px-2 overflow-hidden flex flex-col"
       ref={emblaRef}
     >
-      <div className="embla__container w-full h-5/6 bg-green-500  p-4 flex flex-row items-center">
+      <div className="embla__container w-full h-5/6  p-4 flex flex-row items-center">
         {recipes.map((recipe, index) => (
           <div
             key={index}
@@ -115,7 +115,7 @@ export function RecipesCards({ recipes }: RecipesProps) {
           </div>
         ))}
       </div>
-      <div className="flex w-full bg-pink-400 h-1/6 px-2 flex-row justify-between items-center">
+      <div className="flex w-full h-1/6 px-2 flex-row justify-between items-center">
         <FunctionalBtn
           fn={scrollPrev}
           classNameIcon="icon-[ion--arrow-back-outline] text-black"

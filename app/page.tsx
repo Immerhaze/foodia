@@ -16,8 +16,48 @@ export default function Page() {
   const [ShowForm, setShowForm] = useState(false);
   const store = useStore();
 
-  console.log("show forms:", ShowForm);
-  console.log("show current error:", error);
+  const recipesarray = [
+    {
+      title: "Grilled Chicken Salad",
+      ingredients: [
+        { name: "Chicken Breast", quantity: "200g", calories: 165, price: 5 },
+        { name: "Mixed Greens", quantity: "100g", calories: 20, price: 2 },
+        { name: "Cherry Tomatoes", quantity: "50g", calories: 10, price: 1 },
+        { name: "Cucumber", quantity: "50g", calories: 8, price: 0.5 },
+        { name: "Olive Oil", quantity: "1 tbsp", calories: 120, price: 0.2 },
+        { name: "Lemon Juice", quantity: "1 tbsp", calories: 4, price: 0.1 },
+      ],
+      steps: [
+        "Season the chicken breast with salt and pepper.",
+        "Grill the chicken breast until fully cooked.",
+        "Chop the mixed greens, cherry tomatoes, and cucumber.",
+        "Slice the grilled chicken breast.",
+        "Combine all ingredients in a bowl.",
+        "Dress with olive oil and lemon juice.",
+      ],
+      duration: "20 minutes",
+    },
+    {
+      title: "Vegetable Stir Fry",
+      ingredients: [
+        { name: "Bell Pepper", quantity: "100g", calories: 25, price: 1 },
+        { name: "Broccoli", quantity: "100g", calories: 34, price: 1.5 },
+        { name: "Carrot", quantity: "100g", calories: 41, price: 0.8 },
+        { name: "Soy Sauce", quantity: "2 tbsp", calories: 20, price: 0.5 },
+        { name: "Olive Oil", quantity: "1 tbsp", calories: 120, price: 0.2 },
+        { name: "Garlic", quantity: "2 cloves", calories: 8, price: 0.1 },
+      ],
+      steps: [
+        "Chop the bell pepper, broccoli, and carrot.",
+        "Heat olive oil in a pan.",
+        "Add minced garlic and sauté until fragrant.",
+        "Add the chopped vegetables to the pan.",
+        "Stir fry until the vegetables are tender.",
+        "Add soy sauce and mix well.",
+      ],
+      duration: "15 minutes",
+    },
+  ];
 
   // Handler for when recipes are generated and ready to show
   const handleRecipesGenerated = useCallback((newRecipes: any[]) => {
@@ -65,14 +105,14 @@ export default function Page() {
                 M
               </h1>
             </div>
-            <div className="h-calc-100-minus-40px  md:h-full flex flex-col items-center bg-yellow-200">
-              <div className="h-1/6 w-full bg-blue-600 flex justify-center items-end">
+            <div className="h-calc-100-minus-40px  md:h-full flex flex-col items-center ">
+              <div className="h-1/6 w-full flex justify-center items-end">
                 <span className="text-2xl rounded-lg w-2/3 text-white bg-semantic_green_light font font-semibold tracking-wider flex flex-row justify-center items-center py-2">
                   <h2>RECETAS</h2>
                 </span>
               </div>
-              <RecipesCards recipes={recipes} />
-              <div className=" bg-purple-400 py-2 w-screen h-1/6 md:hidden flex flex-col items-center justify-between">
+              <RecipesCards recipes={recipesarray} />
+              <div className=" py-2 w-screen h-1/6 md:hidden flex flex-col items-center justify-between">
                 <EmailForm recipeslist={recipes} />
                 <PdfForm recipes={recipes} />
                 <FunctionalBtn
@@ -82,7 +122,7 @@ export default function Page() {
                   classNameBtn="font-semibold bg-chart_emerald_light text-white  w-2/3 md:w-1/2"
                 />
               </div>
-              <div className="hidden h-1/6 bg-purple-400 w-full  md:flex flex-col justify-center items-center gap-3">
+              <div className="hidden h-1/6  md:flex flex-crow justify-center items-center gap-3">
                 <EmailForm recipeslist={recipes} />
                 <PdfForm recipes={recipes} />
               </div>

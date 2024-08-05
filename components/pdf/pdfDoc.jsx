@@ -745,7 +745,7 @@ const MyDocument = ({ recipes, username }) => {
             </Text>
           </View>
         </View>
-        <Text style={styles.pagefooter} fixed={true}>
+        <Text style={styles.pagefooter}>
           Visitanos en {""}
           <Link src="https://www.mealtaim.online/" style={{ color: "#45E18D" }}>
             mealtaim.online
