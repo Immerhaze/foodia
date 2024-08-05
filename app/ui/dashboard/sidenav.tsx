@@ -4,6 +4,9 @@ import { InputSection } from "@/app/ui/components/input-buttons";
 import useStore from "@/app/store";
 import { GetDiario } from "@/lib/utils";
 import { FunctionalBtn } from "../components/functionalBtn";
+import Link from "next/link";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 
 interface SideNavProps {
   onRecipesGenerated: (recipes: any[]) => void;
@@ -266,7 +269,7 @@ export default function SideNav({
       ],
     },
   ];
-
+  const { toast } = useToast();
   const store = useStore();
   const [error, setError] = useState<string | null>(null);
 
@@ -300,7 +303,6 @@ export default function SideNav({
   }
 
   async function checkStore() {
-    store.setapiRunning(true);
     const {
       genre,
       weight,
@@ -342,18 +344,21 @@ export default function SideNav({
     const diario = GetDiario(safeGenre, weight, height, age);
     console.log("Calculated diario value:", diario);
 
-    if (!body || !diet || !objective) {
+    if (!body || !diet || !objective || budget < 25000) {
       console.error("Missing required fields for recipe generation:", {
         body,
         diet,
         objective,
       });
+      store.setError("Campos requeridos");
       store.setapiRunning(false);
-      setError("Please complete all required sections.");
+      setError("Rellena los 3 valores requeridos: objetivo, dieta, cuerpo.");
       return;
     }
 
     try {
+      store.setapiRunning(true);
+      showform(false);
       console.log("Calling generateRecipes with parameters:", {
         body,
         objective,
@@ -384,7 +389,13 @@ export default function SideNav({
     } catch (error) {
       console.error("Error generating recipes:", error);
       store.setapiRunning(false);
-      setError("Failed to generate recipes.");
+      setError("Hubo un fallo, intenta nuevamente");
+      toast({
+        title: "Error",
+        duration: 5000,
+        description:
+          "Inténtalo de nuevo; incluso el mejor chef comete errores.",
+      });
     }
   }
 
@@ -394,7 +405,9 @@ export default function SideNav({
         <div className="w-full text-secondary text-center text-primary_text_light font-normal text-4xl ">
           <h1>
             MEALT
-            <span className="text-semantic_green_light font-extrabold">AI</span>
+            <span className="text-semantic_green_light font-extrabold -ml-1">
+              AI
+            </span>
             M
           </h1>
         </div>
@@ -403,7 +416,7 @@ export default function SideNav({
         fn={() => showform(false)}
         text="Inicio"
         classNameIcon="icon-[icon-park-twotone--back] text-semantic_green_light"
-        classNameBtn="w-full text-xl font-semibold px-1 md:hidden"
+        classNameBtn="w-full text-xl font-semibold px-1  h-20 md:hidden"
       />
       <div className=" overflow-y-scroll overflow-x-hidden input-scrollbar flex grow flex-col py-2 justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <InputSection arr={sections} />
@@ -417,15 +430,14 @@ export default function SideNav({
                 behavior: "smooth",
               });
             }
-            showform(false);
             checkStore();
           }}
-          className="w-full flex flex-col justify-center items-center"
+          className="w-full flex flex-col justify-center items-center pb-5"
         >
           <button
             type="submit" // Change type to submit
             disabled={store.apiRunning}
-            className="h-[48px] w-[80%] border-2 border-accent_color_light text-accent_color_light flex flex-row justify-center items-center"
+            className="h-[48px] w-[80%] p border-2 border-accent_color_light text-accent_color_light flex flex-row justify-center items-center"
           >
             {store.apiRunning ? (
               //
@@ -449,9 +461,12 @@ export default function SideNav({
       <div className="border-t-[1px]  border-primary_text_light/30 rounded-2xl h-10 pt-4 flex justify-center items-end text-xs text-primary_text_light font-light">
         <p className=" flex flex-row text-base gap-2">
           Diseñado por
-          <span className="text-semantic_green_light font-semibold underline">
+          <Link
+            href="https://www.linkedin.com/in/nicolas-romero--nicode/"
+            className="text-semantic_green_light font-semibold underline"
+          >
             Nicode
-          </span>
+          </Link>
         </p>
       </div>
     </div>

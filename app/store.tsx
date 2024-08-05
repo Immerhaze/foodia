@@ -1,3 +1,4 @@
+import { string } from "zod";
 import { create } from "zustand";
 
 // Define the types for the store
@@ -16,9 +17,11 @@ type InputStore = {
   intolerance: string[];
   condition: string[];
   budget: number;
+  error: string;
   setInput: (key: string, value: any) => void;
   delInput: (key: string, value: any) => void; // Add delInput for removing values from arrays
   setapiRunning: (value: boolean) => void; // Function to manually set apiRunning
+  setError: (value: string) => void; // Function to manually set apiRunning
   [key: string]: any; // Index signature for dynamic keys
 };
 
@@ -38,6 +41,7 @@ const useStore = create<InputStore>((set) => ({
   condition: [],
   budget: 25000,
   mobileConsult: true,
+  error: "",
   setInput: (key, value) => set((state) => ({ ...state, [key]: value })),
   delInput: (key, value) =>
     set((state) => {
@@ -50,6 +54,7 @@ const useStore = create<InputStore>((set) => ({
       return state;
     }),
   setapiRunning: (value) => set(() => ({ apiRunning: value })), // Manually set apiRunning
+  setError: (value) => set(() => ({ error: value })), // Manually set apiRunning
   setMobileConsult: (value: Boolean) => set(() => ({ mobileConsult: value })), // Manually set apiRunning
 }));
 

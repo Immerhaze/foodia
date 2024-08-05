@@ -66,7 +66,7 @@ export const EmailTemplate = ({
           <Container className="w-full max-h[100%] bg-[#F2F8F7] p-3">
             <Heading className="w-full bg-white rounded-xl h-20 flex justify-center items-center">
               <Text className="text-6xl">
-                <strong>MAILT</strong>
+                <strong>MEALT</strong>
               </Text>
               <Text className=" text-6xl text-[#45E18D]">AI</Text>
               <Text className="text-6xl">
@@ -84,7 +84,7 @@ export const EmailTemplate = ({
               </Column>
               <Column className="w-1/2">
                 <Img
-                  src="https://next-foodia.vercel.app/pdfImages/topimage.png"
+                  src="public\pdfImages\topimage.png"
                   alt="Illustration of two people eating food at a table"
                   width="300"
                   height="300"
@@ -254,7 +254,7 @@ export const EmailTemplate = ({
             </Section>
 
             <Section style={{ padding: "20px", textAlign: "center" }}>
-              <Link href="https://mealtaim.online">
+              <Link href="https://www.mealtaim.online/">
                 <Button
                   style={{
                     background: "#45E18D", // Button background color

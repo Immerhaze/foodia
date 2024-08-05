@@ -9,7 +9,6 @@ import {
   TooltipContent,
 } from "@/components/ui/tooltip";
 
-// INPUT BUTTON COMPONENT FROM THE FORM
 interface InputButtonProps {
   title: string | ReactNode;
   tooltip: string | ReactNode;
@@ -32,47 +31,79 @@ export function InputButton({
   inputValue,
 }: InputButtonProps) {
   const getBackgroundColorClass = () => {
+    const baseClasses = "bg-white text-black";
+
+    const selectedClasses = "text-white";
+
+    const hoverClassesLg = "lg:hover:font-semibold lg:hover:text-white";
+
     switch (index) {
       case 0:
         return isSelected
-          ? "bg-semantic_green_light text-white"
-          : "hover:bg-semantic_green_light";
+          ? `bg-semantic_green_light ${selectedClasses}`
+          : `${baseClasses} ${hoverClassesLg} lg:hover:bg-semantic_green_light`;
       case 1:
-        return isSelected ? "bg-blue-400 text-white" : "hover:bg-blue-400";
+        return isSelected
+          ? `bg-blue-400 ${selectedClasses}`
+          : `${baseClasses} ${hoverClassesLg} lg:hover:bg-blue-400`;
       case 2:
         return isSelected
-          ? "bg-chart_emerald_light text-white"
-          : "hover:bg-chart_emerald_light";
+          ? `bg-chart_emerald_light ${selectedClasses}`
+          : `${baseClasses} ${hoverClassesLg} lg:hover:bg-chart_emerald_light`;
       case 3:
         return isSelected
-          ? "bg-chart_emerald_light text-white"
-          : "hover:bg-chart_emerald_light";
+          ? `bg-chart_emerald_light ${selectedClasses}`
+          : `${baseClasses} ${hoverClassesLg} lg:hover:bg-chart_emerald_light`;
       case 4:
         return isSelected
-          ? "bg-chart_emerald_light text-white"
-          : "hover:bg-chart_emerald_light";
+          ? `bg-chart_emerald_light ${selectedClasses}`
+          : `${baseClasses} ${hoverClassesLg} lg:hover:bg-chart_emerald_light`;
       case 5:
         return isSelected
-          ? "bg-chart_emerald_light text-white"
-          : "hover:bg-chart_emerald_light";
+          ? `bg-chart_emerald_light ${selectedClasses}`
+          : `${baseClasses} ${hoverClassesLg} lg:hover:bg-chart_emerald_light`;
       case 6:
         return isSelected
-          ? "bg-chart_emerald_light text-white"
-          : "hover:bg-chart_emerald_light";
+          ? `bg-chart_emerald_light ${selectedClasses}`
+          : `${baseClasses} ${hoverClassesLg} lg:hover:bg-chart_emerald_light`;
       case 7:
         return isSelected
-          ? "bg-chart_emerald_light text-white"
-          : "hover:bg-chart_emerald_light";
+          ? `bg-chart_emerald_light ${selectedClasses}`
+          : `${baseClasses} ${hoverClassesLg} lg:hover:bg-chart_emerald_light`;
       default:
         return isSelected
-          ? "bg-semantic_red_light text-white"
-          : "hover:bg-semantic_red_light";
+          ? `bg-semantic_red_light ${selectedClasses}`
+          : `${baseClasses} ${hoverClassesLg} lg:hover:bg-semantic_red_light`;
+    }
+  };
+
+  const getShadowColorClass = () => {
+    const baseClasses = "lg:shadow-semantic_green_light/50 shadow-sm"; // Use default shadow for larger screens
+
+    switch (index) {
+      case 0:
+        return `${baseClasses} shadow-semantic_green_light/50`;
+      case 1:
+        return `${baseClasses} shadow-blue-400/50`;
+      case 2:
+        return `${baseClasses} shadow-chart_emerald_light/50`;
+      case 3:
+        return `${baseClasses} shadow-chart_emerald_light/50`;
+      case 4:
+        return `${baseClasses} shadow-chart_emerald_light/50`;
+      case 5:
+        return `${baseClasses} shadow-chart_emerald_light/50`;
+      case 6:
+        return `${baseClasses} shadow-chart_emerald_light/50`;
+      case 7:
+        return `${baseClasses} shadow-chart_emerald_light/50`;
+      default:
+        return `${baseClasses} shadow-semantic_red_light/50`;
     }
   };
 
   const handleClick = () => {
-    console.log(`Clicked: ${title}, isSelected: ${isSelected}`);
-    onSelection(title, !isSelected); // Toggle selection state
+    onSelection(title, !isSelected);
   };
 
   const placeholder = (index: number): string => {
@@ -112,13 +143,22 @@ export function InputButton({
           <div
             onClick={handleClick}
             className={clsx(
-              "button_input rounded-lg shadow-sm border-[0.5px]  shadow-semantic_green_light/50 h-full w-full  flex flex-col justify-center items-center text-ellipsis overflow-hidden transition-colors duration-300 ",
-              getBackgroundColorClass()
+              "button_input rounded-lg group border-[0.5px] h-full w-full flex flex-col justify-center items-center text-ellipsis overflow-hidden transition-colors duration-300 ",
+              getBackgroundColorClass(),
+              getShadowColorClass()
             )}
           >
-            <span className={`${icon}`}></span>
+            <span
+              className={`${icon} ${
+                isSelected ? "text-white" : "text-black"
+              } lg:group-hover:text-white`}
+            ></span>
             {typeof title === "string" ? (
-              <h1 className="w-full text-[8px] md:text-[10px] lg:text-xs text-ellipsis overflow-hidden text-center uppercase ">
+              <h1
+                className={`w-full text-[10px] lg:text-xs text-ellipsis overflow-hidden text-center uppercase ${
+                  isSelected ? "text-white" : "text-black"
+                } lg:group-hover:text-white lg:group-hover:font-medium`}
+              >
                 {title}
               </h1>
             ) : null}
@@ -133,7 +173,6 @@ export function InputButton({
     </TooltipProvider>
   );
 }
-
 // FULL SECTIONS RENDERING AND USAGE OF BUTTON FUNCTION FROM ABOVE
 interface SectionItem {
   title: string | ReactNode;
@@ -177,13 +216,14 @@ export function InputSection({ arr }: InputSectionProps) {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
-    if (!isNaN(value)) {
-      setSliderValue(value);
-      setSelectedValues((prevValues) => ({
-        ...prevValues,
-        presupuesto: [value.toString()], // Update presupuesto as a string array with the new value
-      }));
-    }
+    console.log("values", value);
+    console.log("values", isNaN(value));
+
+    setSliderValue(value);
+    setSelectedValues((prevValues) => ({
+      ...prevValues,
+      presupuesto: [value.toString()], // Update presupuesto as a string array with the new value
+    }));
   };
 
   const handleSliderChange = (value: number[]) => {
@@ -345,7 +385,7 @@ export function InputSection({ arr }: InputSectionProps) {
           <p className="text-base font-semibold">$</p>
           <input
             type="number"
-            placeholder="15.000 clp"
+            placeholder="15000"
             value={sliderValue}
             onChange={handleInputChange}
             className={`w-1/2 border p-2 rounded-lg focus:border-green-700 ${
