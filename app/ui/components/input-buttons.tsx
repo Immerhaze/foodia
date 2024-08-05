@@ -173,7 +173,7 @@ export function InputSection({ arr }: InputSectionProps) {
       });
     }
     // No need for an `else return;`, the `return;` is not needed here.
-  }, [store.apiRunning, store.body]); // Add `store.body` to dependencies
+  }, [store.apiRunning]); // Add `store.body` to dependencies
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
