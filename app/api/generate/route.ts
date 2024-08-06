@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
         : "";
 
     const prompt = `
-        Genera mínimo 5 máximo 7 recetas de almuerzos innovadoras y variadas EN ESPAÑOL. Ten en cuenta los siguientes parámetros para estas recetas:
+       Genera mínimo 5 máximo 7 recetas de comida EN ESPAÑOL. Ten en cuenta los siguientes parámetros para estas recetas:
        ${caloricExpenditureMessage}
        3. Objetivo: ${objective}
        4. Dieta: ${dietsearch}
@@ -89,10 +89,26 @@ export async function POST(req: NextRequest) {
        8. Presupuesto total para todas las recetas (presupuesto total semanal): ${budget}
        Lo más importante es que las recetas se basen en la dieta, alergias e intolerancias proporcionadas.
        Instrucciones adicionales:
-       los pasos a seguir para cocinar que sean lo mas concisos posible
+       los pasos a seguir para cocinar que sean lo más concisos posible
        - No incluyas ingredientes comunes de cocina como sal y aceite en la lista de ingredientes.
        - Proporciona las cantidades necesarias en gramos o unidades dependiendo del ingrediente para cocinar dos porciones de cada receta.
-       `;
+       - La respuesta debe estar en formato JSON según el siguiente esquema:
+       {
+         "recipes": [
+           {
+             "title": "string",
+             "ingredients": [
+               {
+                 "name": "string",
+                 "quantity": "string",
+                 "calories": "number"
+               }
+             ],
+             "steps": ["string"],
+             "duration": "string"
+           }
+         ]
+       };`;
 
     const response = await generateObject({
       model: google("models/gemini-1.5-flash-latest"),
