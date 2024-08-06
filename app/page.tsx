@@ -16,49 +16,6 @@ export default function Page() {
   const [ShowForm, setShowForm] = useState(false);
   const store = useStore();
 
-  const recipesarray = [
-    {
-      title: "Grilled Chicken Salad",
-      ingredients: [
-        { name: "Chicken Breast", quantity: "200g", calories: 165, price: 5 },
-        { name: "Mixed Greens", quantity: "100g", calories: 20, price: 2 },
-        { name: "Cherry Tomatoes", quantity: "50g", calories: 10, price: 1 },
-        { name: "Cucumber", quantity: "50g", calories: 8, price: 0.5 },
-        { name: "Olive Oil", quantity: "1 tbsp", calories: 120, price: 0.2 },
-        { name: "Lemon Juice", quantity: "1 tbsp", calories: 4, price: 0.1 },
-      ],
-      steps: [
-        "Season the chicken breast with salt and pepper.",
-        "Grill the chicken breast until fully cooked.",
-        "Chop the mixed greens, cherry tomatoes, and cucumber.",
-        "Slice the grilled chicken breast.",
-        "Combine all ingredients in a bowl.",
-        "Dress with olive oil and lemon juice.",
-      ],
-      duration: "20 minutes",
-    },
-    {
-      title: "Vegetable Stir Fry",
-      ingredients: [
-        { name: "Bell Pepper", quantity: "100g", calories: 25, price: 1 },
-        { name: "Broccoli", quantity: "100g", calories: 34, price: 1.5 },
-        { name: "Carrot", quantity: "100g", calories: 41, price: 0.8 },
-        { name: "Soy Sauce", quantity: "2 tbsp", calories: 20, price: 0.5 },
-        { name: "Olive Oil", quantity: "1 tbsp", calories: 120, price: 0.2 },
-        { name: "Garlic", quantity: "2 cloves", calories: 8, price: 0.1 },
-      ],
-      steps: [
-        "Chop the bell pepper, broccoli, and carrot.",
-        "Heat olive oil in a pan.",
-        "Add minced garlic and sauté until fragrant.",
-        "Add the chopped vegetables to the pan.",
-        "Stir fry until the vegetables are tender.",
-        "Add soy sauce and mix well.",
-      ],
-      duration: "15 minutes",
-    },
-  ];
-
   // Handler for when recipes are generated and ready to show
   const handleRecipesGenerated = useCallback((newRecipes: any[]) => {
     setRecipes(newRecipes);
@@ -111,7 +68,7 @@ export default function Page() {
                   <h2>RECETAS</h2>
                 </span>
               </div>
-              <RecipesCards recipes={recipesarray} />
+              <RecipesCards recipes={recipes} />
               <div className=" py-2 w-screen h-1/6 md:hidden flex flex-col items-center justify-between">
                 <EmailForm recipeslist={recipes} />
                 <PdfForm recipes={recipes} />
