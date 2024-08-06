@@ -5,11 +5,9 @@ import { ingredientList } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request, res: Response) {
-  console.log("starting to send email");
   const { formdata, recipes } = await request.json();
 
   const categorizedIngredients = ingredientList({ recipes: recipes });
-  console.log(process.env.RESEND_API_KEY);
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     const { data, error } = await resend.emails.send({

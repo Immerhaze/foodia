@@ -67,7 +67,6 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Email sent successfully:", data);
         setSent(true);
         setSuccessMessage("Email enviado con éxito"); // Optional
         setTimeout(() => {
@@ -76,11 +75,9 @@ const EmailForm: React.FC<EmailFormProps> = ({ recipeslist }) => {
         }, 3000);
       } else {
         const error = await response.json();
-        console.error("Error sending email:", error);
         setSuccessMessage(null); // Clear success message on error
       }
     } catch (error) {
-      console.error("Error:", error);
       setSuccessMessage(null); // Clear success message on error
     } finally {
       setLoading(false);

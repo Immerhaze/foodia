@@ -102,7 +102,6 @@ export async function POST(req: NextRequest) {
     });
 
     if (!response || !response.object || !response.object.recipes) {
-      console.error("Invalid API response structure:", response);
       return NextResponse.json(
         { error: "Invalid API response structure" },
         { status: 500 }
@@ -111,7 +110,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(response.object.recipes);
   } catch (error) {
-    console.error("Error details:", error);
     return NextResponse.json(
       { error: `Failed to generate recipes: ${error}` },
       { status: 500 }

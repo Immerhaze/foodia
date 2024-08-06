@@ -41,7 +41,6 @@ export function RecipesCards({ recipes }: RecipesProps) {
   useEffect(() => {
     if (emblaApi) {
       emblaApi.reInit(); // Reinitialize to ensure proper calculation
-      console.log(emblaApi.slideNodes()); // Access API
     }
   }, [emblaApi, recipes]);
 

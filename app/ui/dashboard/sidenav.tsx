@@ -270,9 +270,7 @@ export default function SideNav({
     },
   ];
   const store = useStore();
-  console.log("api running:", store.apiRunning);
   const [error, setError] = useState<string | null>("");
-  console.log("state error:", error);
 
   async function generateRecipes(data: {
     body: string;
@@ -321,38 +319,11 @@ export default function SideNav({
     // Ensure genre is a valid string, fallback to "unknown" if null or undefined
     const safeGenre: string = genre ?? "unknown";
 
-    // Log the state values for debugging
-    console.log("Current store values:", {
-      genre: safeGenre,
-      weight,
-      height,
-      age,
-      body,
-      diet,
-      objective,
-      allergies,
-      intolerance,
-      condition,
-      budget,
-    });
     setError("");
     store.setError("");
-
-    // Call GetDiario with the correct arguments
-    if (safeGenre == null || weight == null || height == null || age == null) {
-      console.error("Missing required parameters for GetDiario");
-      // Optionally handle this case if needed, e.g., set a default or show a warning
-    }
-
     const diario = GetDiario(safeGenre, weight, height, age);
-    console.log("Calculated diario value:", diario);
 
     if (!body || !diet || !objective || budget < 25000) {
-      console.error("Missing required fields for recipe generation:", {
-        body,
-        diet,
-        objective,
-      });
       store.setError("Campos requeridos");
       setError("Rellena los 3 valores requeridos: objetivo, dieta, cuerpo.");
       return;
@@ -361,16 +332,6 @@ export default function SideNav({
     try {
       store.setapiRunning(true);
       showform();
-      console.log("Calling generateRecipes with parameters:", {
-        body,
-        objective,
-        diet,
-        allergies,
-        intolerance,
-        condition,
-        budget,
-        kca: diario,
-      });
 
       const response = await generateRecipes({
         body,
@@ -383,8 +344,6 @@ export default function SideNav({
         kca: diario,
       });
 
-      console.log("Recipe generation response:", response);
-
       store.setMobileConsult(true);
       onRecipesGenerated(response);
       store.setapiRunning(false);
@@ -396,7 +355,6 @@ export default function SideNav({
         });
       }
     } catch (error) {
-      console.error("Error generating recipes:", error);
       store.setapiRunning(false);
       showFormOn();
       setError("Hubo un fallo, intenta nuevamente");

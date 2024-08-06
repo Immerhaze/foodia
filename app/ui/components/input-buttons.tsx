@@ -200,8 +200,6 @@ export function InputSection({ arr }: InputSectionProps) {
     presupuesto: [minValue.toString()], // Initialize presupuesto with minValue as a string
   });
 
-  console.log("selectedValues:", selectedValues);
-
   const [inputValues, setInputValues] = useState<{
     [key: number]: string;
   }>({});
@@ -222,8 +220,6 @@ export function InputSection({ arr }: InputSectionProps) {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
-    console.log("values", value);
-    console.log("values", isNaN(value));
 
     setSliderValue(value);
     setSelectedValues((prevValues) => ({
@@ -344,7 +340,6 @@ export function InputSection({ arr }: InputSectionProps) {
       case "condition":
         return "Condiciones medicas";
       default:
-        console.log(`Wrong key passed`);
     }
   }
 
