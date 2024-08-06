@@ -92,23 +92,7 @@ export async function POST(req: NextRequest) {
        los pasos a seguir para cocinar que sean lo más concisos posible
        - No incluyas ingredientes comunes de cocina como sal y aceite en la lista de ingredientes.
        - Proporciona las cantidades necesarias en gramos o unidades dependiendo del ingrediente para cocinar dos porciones de cada receta.
-       - La respuesta debe estar en formato JSON según el siguiente esquema:
-       {
-         "recipes": [
-           {
-             "title": "string",
-             "ingredients": [
-               {
-                 "name": "string",
-                 "quantity": "string",
-                 "calories": "number"
-               }
-             ],
-             "steps": ["string"],
-             "duration": "string"
-           }
-         ]
-       };`;
+       `;
 
     const response = await generateObject({
       model: google("models/gemini-1.5-flash-latest"),
