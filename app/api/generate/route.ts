@@ -38,6 +38,20 @@ export async function POST(req: NextRequest) {
       kca,
     } = await req.json();
 
+    const dietsearch =
+      diet == "Omnivora"
+        ? " tanto alimentos de origen animal como vegetal."
+        : diet == "Lactoveg"
+        ? "Con vegetales y productos lácteos, pero no huevos ni carne."
+        : diet == "Ovoveg"
+        ? "con vegetales y huevos, pero no lácteos ni carne."
+        : diet == "Lactoovoveg"
+        ? "con vegetales, lácteos y huevos, pero no carne."
+        : diet == "Pescetariana"
+        ? "con vegetales y pescado, pero no otras carnes."
+        : diet == "vegana" &&
+          "con solo alimentos de origen vegetal, sin productos animales ni derivados.";
+
     const caloricExpenditureMessage =
       typeof kca === "number"
         ? `1. El gasto calórico de esta persona es de ${
@@ -47,25 +61,28 @@ export async function POST(req: NextRequest) {
 
     const allergiesMessage =
       allergies && allergies.length > 0
-        ? `5. Alergias: ${allergies.join(", ")}`
+        ? `5.IMPORTANTE tener en cuenta Alergias: ${allergies.join(", ")}`
         : "";
 
     const intoleranceMessage =
       intolerance && intolerance.length > 0
-        ? `6. Intolerancias: ${intolerance.join(", ")}`
+        ? `6.IMPORTANTE tener en cuenta Intolerancias: ${intolerance.join(
+            ", "
+          )}`
         : "";
 
     const conditionsMessage =
       conditions && conditions.length > 0
-        ? `7. Condiciones médicas: ${conditions.join(", ")}`
+        ? `7.IMPORTANTE tener en cuentaCondiciones médicas: ${conditions.join(
+            ", "
+          )}`
         : "";
 
     const prompt = `
-        Genera 7 recetas de almuerzos innovadoras y variadas. Ten en cuenta los siguientes parámetros para estas recetas:
+        Genera mínimo 5 máximo 7 recetas de almuerzos innovadoras y variadas EN ESPAÑOL. Ten en cuenta los siguientes parámetros para estas recetas:
        ${caloricExpenditureMessage}
-       2. Tipo de cuerpo: ${body}
        3. Objetivo: ${objective}
-       4. Dieta: ${diet}
+       4. Dieta: ${dietsearch}
        ${allergiesMessage}
        ${intoleranceMessage}
        ${conditionsMessage}
@@ -73,7 +90,6 @@ export async function POST(req: NextRequest) {
        Lo más importante es que las recetas se basen en la dieta, alergias e intolerancias proporcionadas.
        Instrucciones adicionales:
        los pasos a seguir para cocinar que sean lo mas concisos posible
-       - Asegúrate de que las recetas sean variadas y representen diferentes tipos de cocinas del mundo.
        - No incluyas ingredientes comunes de cocina como sal y aceite en la lista de ingredientes.
        - Proporciona las cantidades necesarias en gramos o unidades dependiendo del ingrediente para cocinar dos porciones de cada receta.
        `;
