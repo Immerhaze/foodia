@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
 
     // Call the generateObject function
     const response = await generateObject({
-      model: google("models/gemini-1.5-flash"),
+      model: google("models/gemini-1.5-pro"),
       temperature: 0.75,
       schema,
       prompt, // Use the dynamically generated prompt here
