@@ -283,7 +283,8 @@ export default function SideNav({
     kca: number | string;
   }) {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_GENERATE_URL}`,
+      "http://localhost:3000/api/send",
+      // `${process.env.NEXT_PUBLIC_API_GENERATE_URL}`,
       {
         method: "POST",
         headers: {

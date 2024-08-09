@@ -79,10 +79,9 @@ export async function POST(req: NextRequest) {
         : "";
 
     const prompt = `
-       Genera mínimo 5 máximo 7 recetas de comida EN ESPAÑOL. Ten en cuenta los siguientes parámetros para estas recetas:
+       Genera mínimo 5 máximo 7 recetas de comida. Ten en cuenta los siguientes parámetros para estas recetas:
        ${caloricExpenditureMessage}
        3. Objetivo: ${objective}
-       4. Dieta: ${dietsearch}
        ${allergiesMessage}
        ${intoleranceMessage}
        ${conditionsMessage}
