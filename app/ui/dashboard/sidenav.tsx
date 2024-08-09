@@ -283,13 +283,23 @@ export default function SideNav({
     kca: number | string;
   }) {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_GENERATE_URL}`,
+      "http://localhost:3000/api/generate",
+      // `${process.env.NEXT_PUBLIC_API_GENERATE_URL}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          body: ["Ectomorfo"],
+          objective: ["Subir"],
+          diet: ["Omnivora"],
+          allergies: [],
+          intolerance: [],
+          conditions: [],
+          budget: 25000,
+          kca: "Calculation wasn't made due to lack of information",
+        }),
       }
     );
 
@@ -357,6 +367,7 @@ export default function SideNav({
     } catch (error) {
       store.setapiRunning(false);
       showFormOn();
+      console.log(error);
       setError("Hubo un fallo, intenta nuevamente");
       store.setError("fallo de conexión");
     }

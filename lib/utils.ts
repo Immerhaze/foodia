@@ -70,44 +70,28 @@ interface emailprops {
 }
 
 export const ingredientList = ({ recipes }: emailprops) => {
-  let allIngredients: string[] = [];
-  let uniqueIngredients: string[] = [];
-  let processed: Set<string> = new Set();
+  const normalizeName = (name: string) => name.toLowerCase().trim();
 
-  // Function to normalize ingredient names
-  const normalizeName = (name: string) => {
-    return name.toLowerCase().trim();
-  };
+  // Flatten and normalize ingredient names
+  const allIngredients = recipes.flatMap((recipe) =>
+    recipe.ingredients.map((ingredient) => normalizeName(ingredient.name))
+  );
 
-  // Function to find partial matches
-  const findMatch = (name: string, list: string[]) => {
-    for (const item of list) {
-      if (item.includes(name) || name.includes(item)) {
-        return item;
-      }
+  // Create a set to track unique ingredients
+  const uniqueIngredientsSet = new Set<string>();
+
+  // Filter to get unique ingredients
+  const uniqueIngredients = allIngredients.filter((ingredient) => {
+    // Check if ingredient is already in the set
+    const isUnique = !uniqueIngredientsSet.has(ingredient);
+
+    // If unique, add it to the set
+    if (isUnique) {
+      uniqueIngredientsSet.add(ingredient);
     }
-    return null;
-  };
 
-  recipes.forEach((recipe) => {
-    recipe.ingredients.forEach((ingredient) => {
-      const normalizedName = normalizeName(ingredient.name);
-
-      if (!processed.has(normalizedName)) {
-        // Find if there's a similar ingredient already in the list
-        const match = findMatch(normalizedName, uniqueIngredients);
-        if (match) {
-          // If match is found, use the existing ingredient's name
-          processed.add(normalizedName);
-        } else {
-          // No match found, add as new unique ingredient
-          uniqueIngredients.push(normalizedName);
-          processed.add(normalizedName);
-        }
-      }
-    });
+    return isUnique;
   });
 
-  // Optionally, return or log uniqueIngredients
   return uniqueIngredients;
 };
