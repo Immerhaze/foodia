@@ -290,16 +290,7 @@ export default function SideNav({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          body: ["Ectomorfo"],
-          objective: ["Subir"],
-          diet: ["Omnivora"],
-          allergies: [],
-          intolerance: [],
-          conditions: [],
-          budget: 25000,
-          kca: "Calculation wasn't made due to lack of information",
-        }),
+        body: JSON.stringify(data),
       }
     );
 

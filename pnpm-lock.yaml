@@ -11,6 +11,9 @@ importers:
       '@ai-sdk/google':
         specifier: ^0.0.30
         version: 0.0.30(zod@3.23.8)
+      '@ai-sdk/openai':
+        specifier: ^0.0.44
+        version: 0.0.44(zod@3.23.8)
       '@ai-sdk/react':
         specifier: latest
         version: 0.0.31(react@18.3.1)(zod@3.23.8)
@@ -153,6 +156,12 @@ packages:
     peerDependencies:
       zod: ^3.0.0
 
+  '@ai-sdk/openai@0.0.44':
+    resolution: {integrity: sha512-fIUypicSnuWIOdoRG+dgzAnZDWQrhzqyUvQaLC8hQB6UDAUXkn8sIPdsqKEV35vs3mNXDz/KZ4EEeLxSVGrzMg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
+
   '@ai-sdk/provider-utils@1.0.5':
     resolution: {integrity: sha512-XfOawxk95X3S43arn2iQIFyWGMi0DTxsf9ETc6t7bh91RPWOOPYN1tsmS5MTKD33OGJeaDQ/gnVRzXUCRBrckQ==}
     engines: {node: '>=18'}
@@ -162,8 +171,21 @@ packages:
       zod:
         optional: true
 
+  '@ai-sdk/provider-utils@1.0.9':
+    resolution: {integrity: sha512-yfdanjUiCJbtGoRGXrcrmXn0pTyDfRIeY6ozDG96D66f2wupZaZvAgKptUa3zDYXtUCQQvcNJ+tipBBfQD/UYA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      zod:
+        optional: true
+
   '@ai-sdk/provider@0.0.14':
     resolution: {integrity: sha512-gaQ5Y033nro9iX1YUjEDFDRhmMcEiCk56LJdIUbX5ozEiCNCfpiBpEqrjSp/Gp5RzBS2W0BVxfG7UGW6Ezcrzg==}
+    engines: {node: '>=18'}
+
+  '@ai-sdk/provider@0.0.17':
+    resolution: {integrity: sha512-f9j+P5yYRkqKFHxvWae5FI0j6nqROPCoPnMkpc2hc2vC7vKjqzrxBJucD8rpSaUjqiBnY/QuRJ0QeV717Uz5tg==}
     engines: {node: '>=18'}
 
   '@ai-sdk/react@0.0.31':
@@ -4316,6 +4338,12 @@ snapshots:
       '@ai-sdk/provider-utils': 1.0.5(zod@3.23.8)
       zod: 3.23.8
 
+  '@ai-sdk/openai@0.0.44(zod@3.23.8)':
+    dependencies:
+      '@ai-sdk/provider': 0.0.17
+      '@ai-sdk/provider-utils': 1.0.9(zod@3.23.8)
+      zod: 3.23.8
+
   '@ai-sdk/provider-utils@1.0.5(zod@3.23.8)':
     dependencies:
       '@ai-sdk/provider': 0.0.14
@@ -4325,7 +4353,20 @@ snapshots:
     optionalDependencies:
       zod: 3.23.8
 
+  '@ai-sdk/provider-utils@1.0.9(zod@3.23.8)':
+    dependencies:
+      '@ai-sdk/provider': 0.0.17
+      eventsource-parser: 1.1.2
+      nanoid: 3.3.6
+      secure-json-parse: 2.7.0
+    optionalDependencies:
+      zod: 3.23.8
+
   '@ai-sdk/provider@0.0.14':
+    dependencies:
+      json-schema: 0.4.0
+
+  '@ai-sdk/provider@0.0.17':
     dependencies:
       json-schema: 0.4.0
 
@@ -6955,7 +6996,7 @@ snapshots:
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@7.32.0))(eslint@7.32.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@7.32.0))(eslint@7.32.0))(eslint@7.32.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-typescript@3.6.1)(eslint@7.32.0)
       eslint-plugin-jsx-a11y: 6.9.0(eslint@7.32.0)
       eslint-plugin-react: 7.35.0(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@7.32.0)
@@ -6988,7 +7029,7 @@ snapshots:
       enhanced-resolve: 5.17.1
       eslint: 7.32.0
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@7.32.0))(eslint@7.32.0))(eslint@7.32.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@7.32.0))(eslint@7.32.0))(eslint@7.32.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-typescript@3.6.1)(eslint@7.32.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.6
       is-core-module: 2.15.0
@@ -7010,7 +7051,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@7.32.0))(eslint@7.32.0))(eslint@7.32.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@7.32.0)(typescript@5.1.3))(eslint-import-resolver-typescript@3.6.1)(eslint@7.32.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
